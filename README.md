@@ -67,14 +67,22 @@ Read the style guide
     * Roborto
   - Container
     * Centered
-    - Drop Shadow
+    * Drop Shadow
   - Output View
+    - Position
+    - style
   - Top Keys
-    - AC
-    +/-
-    %
+    - Position
+      - block/inline block?
+    - style
   - Function keys
+    - Position
+      - block/inline block?
+    - style
   - Keypad
+    - Position
+      - block/inline block?
+    - style
   - Transitions
 
 

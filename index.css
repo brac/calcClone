@@ -17,3 +17,15 @@
   top:0;
   width: 234px;
 }
+
+.calculator-outputview {
+  background-color: lightblue;
+  color: white;
+  height: 80px;
+}
+
+.calculator-outputview-output{
+  font-size: 3em;
+  padding: .5em .2em;
+  text-align: right;
+}
