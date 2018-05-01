@@ -61,6 +61,23 @@ Read the style guide
      * [Overflow-y](https://www.w3schools.com/cssref/css3_pr_overflow-y.asp)
      * [Overflow-x](https://www.w3schools.com/cssref/css3_pr_overflow-x.asp)
 
+*Build*
+  - Structure
+    * Normalize
+    * Roborto
+  - Container
+    * Centered
+    - Drop Shadow
+  - Output View
+  - Top Keys
+    - AC
+    +/-
+    %
+  - Function keys
+  - Keypad
+  - Transitions
+
+
 
 #### Style Guide Notes
 *HTML*
@@ -120,16 +137,7 @@ With your own code or the code around you. If it's not yours then adjust your st
 
 
 
-*Build*
-  - Container
-    - Drop Shadow
-  - Output View
-  - Top Keys
-    - AC
-    +/-
-    %
-  - Function keys
-  - Keypad
+
 
 
 

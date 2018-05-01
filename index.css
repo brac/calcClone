@@ -3,3 +3,17 @@
 * {
   font-family: 'Roboto';
 }
+
+.calculator {
+  background-color: grey;
+  bottom: 0;
+  border-radius: 5px;
+  box-shadow: 10px 10px 100px grey;
+  height: 320px;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top:0;
+  width: 234px;
+}
