@@ -38,15 +38,30 @@
   }
 
   .calculator-keypad-functionkeys {
+    background-color: #F38026;
     flex: .25;
+    border-bottom-right-radius: 5px;
+
   }
 
+    .calculator-keypad-functionkeys-functionkey,
+    .calculator-keypad-inputkeys-adjustkeys-adjustkey,
+    .calculator-keypad-inputkeys-numberkeys-numberkey {
+      padding: .9em 0 .9em 0;
+    }
+
     .calculator-keypad-functionkeys-functionkey {
-      background-color: #F38026;
+      color: white;
       text-align: center;
-      /*border-bottom: 1px solid grey;*/
       border: 1px solid grey;
     }
+
+
+
+    .calculator-keypad-functionkeys :last-child {
+      border-bottom-right-radius: 5px;
+    }
+
 
   .calculator-keypad-inputkeys-adjustkeys {
     background-color: #CDCDCD;
