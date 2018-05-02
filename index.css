@@ -42,6 +42,8 @@
 }
 
   .calculator-keypad-inputkeys {
+    display: flex;
+    flex-direction: column;
     flex: .75;
   }
 
@@ -56,18 +58,18 @@
     border-bottom-right-radius: 5px;
     border-right: 1px solid #6E6E6E;
     flex: .25;
-
+    display: flex;
+    flex-direction: column;
   }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey,
     .calculator-keypad-inputkeys-numberkeys-numberkey {
-      padding: .65em 0 .65em 0;
+      /*padding: .66em 0 .66em 0;*/
     }
 
     .calculator-keypad-functionkeys-functionkey {
-      padding: .04em 0 .04em 0;
+      flex: 1 0 auto;
     }
-
 
     .calculator-keypad-functionkeys-functionkey {
       border-bottom: 1px solid #6E6E6E;
@@ -92,6 +94,7 @@
     background-color: #CDCDCD;
     display: flex;
     flex-direction: row;
+    flex: 1 0 auto;
   }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey {
@@ -127,6 +130,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     border-bottom-left-radius: 5px;
+    flex: 1 0 auto;
+
   }
 
     .calculator-keypad-inputkeys-numberkeys-numberkey {
