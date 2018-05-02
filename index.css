@@ -37,10 +37,17 @@
 .calculator-keypad {
   display: flex;
   flex-direction: row;
+  user-select: none;
 }
 
   .calculator-keypad-inputkeys {
     flex: .75;
+  }
+
+  .calculator-keypad-functionkeys-functionkey,
+  .calculator-keypad-inputkeys-adjustkeys-adjustkey,
+  .calculator-keypad-inputkeys-numberkeys-numberkey {
+    transition: background-color 100ms;
   }
 
   .calculator-keypad-functionkeys {
@@ -48,19 +55,27 @@
     border-bottom-right-radius: 5px;
     border-right: 1px solid #6E6E6E;
     flex: .25;
+
   }
 
     .calculator-keypad-functionkeys-functionkey,
     .calculator-keypad-inputkeys-adjustkeys-adjustkey,
     .calculator-keypad-inputkeys-numberkeys-numberkey {
       padding: .91em 0 .91em 0;
-
     }
 
     .calculator-keypad-functionkeys-functionkey {
       border-bottom: 1px solid #7B7B7B;
       color: white;
       text-align: center;
+    }
+
+    .calculator-keypad-functionkeys-functionkey:hover {
+      background-color: #DF641E;
+    }
+
+    .calculator-keypad-functionkeys-functionkey:active {
+      background-color: #BF561C;
     }
 
     .calculator-keypad-functionkeys :last-child {
@@ -77,6 +92,14 @@
       border-bottom: 1px solid #7B7B7B;
       flex: 1 0 30%;
       text-align: center;
+    }
+
+    .calculator-keypad-inputkeys-adjustkeys-adjustkey:hover {
+      background-color: #ACADAD;
+    }
+
+    .calculator-keypad-inputkeys-adjustkeys-adjustkey:active {
+      background-color: #828484;
     }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey:last-child {
@@ -104,7 +127,6 @@
       border-bottom: 1px solid #7B7B7B;
       flex: 1 0 30%;
       text-align: center;
-
     }
 
     .calculator-keypad-inputkeys-numberkeys-numberkey:last-child,
@@ -127,5 +149,16 @@
     }
 
     .calculator-keypad-inputkeys-numberkeys :last-child {
-      flex: 0 0 32%;
+      border-left: 1px solid #7B7B7B;
+      flex: 0 0 33%;
     }
+
+    .calculator-keypad-inputkeys-numberkeys-numberkey:hover {
+      background-color: #ACAEAE;
+    }
+
+    .calculator-keypad-inputkeys-numberkeys-numberkey:active {
+      background-color: #7B7B7B;
+    }
+
+

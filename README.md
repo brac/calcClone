@@ -68,21 +68,24 @@ Read the style guide
   - Container
     * Centered
     * Drop Shadow
-  - Output View
-    - Position
-    - style
-  - Top Keys
-    - Position
-      - block/inline block?
-    - style
-  - Function keys
-    - Position
-      - block/inline block?
-    - style
-  - Keypad
-    - Position
-      - block/inline block?
-    - style
+  * Output View
+    * Position
+    * style
+  * Top Keys
+    * Position
+      * block/inline block?
+    * style
+  * Function keys
+    * Position
+      * block/inline block?
+    * style
+  * Keypad
+    * Position
+      * block/inline block?
+    * style
+  - Hover Effect
+  - Click Effect
+  - Keypad symbols
   - Transitions
 
 
