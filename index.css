@@ -5,7 +5,7 @@
 }
 
 .calculator {
-  background-color: #878787;
+  /*background-color: red;*/
   bottom: 0;
   border-radius: 5px;
   box-shadow: 10px 10px 100px grey;
@@ -19,7 +19,13 @@
 }
 
 .calculator-outputview {
+  background-color: #7B7B7B;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   color: white;
+  border-left: 1px solid #6E6E6E;
+  border-right: 1px solid #6E6E6E;
+  border-top: 1px solid #6E6E6E;
 }
 
   .calculator-outputview-output{
@@ -40,23 +46,22 @@
   .calculator-keypad-functionkeys {
     background-color: #F38026;
     border-bottom-right-radius: 5px;
+    border-right: 1px solid #6E6E6E;
     flex: .25;
-
   }
 
     .calculator-keypad-functionkeys-functionkey,
     .calculator-keypad-inputkeys-adjustkeys-adjustkey,
     .calculator-keypad-inputkeys-numberkeys-numberkey {
-      padding: .9em 0 .9em 0;
+      padding: .91em 0 .91em 0;
+
     }
 
     .calculator-keypad-functionkeys-functionkey {
-      border: 1px solid grey;
+      border-bottom: 1px solid #7B7B7B;
       color: white;
       text-align: center;
     }
-
-
 
     .calculator-keypad-functionkeys :last-child {
       border-bottom-right-radius: 5px;
@@ -69,26 +74,56 @@
   }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey {
-      border: 1px solid grey;
+      border-bottom: 1px solid #7B7B7B;
       flex: 1 0 30%;
       text-align: center;
+    }
+
+    .calculator-keypad-inputkeys-adjustkeys-adjustkey:last-child {
+      border-left: 1px solid #7B7B7B;
+      border-right: 1px solid #7B7B7B;
+    }
+
+    .calculator-keypad-inputkeys-adjustkeys-adjustkey:first-child {
+      border-left: 1px solid #6E6E6E;
+      border-right: 1px solid #7B7B7B;
     }
 
   .calculator-keypad-inputkeys-numberkeys {
     background-color: #D9D9D9;
+    border-bottom: 1px solid #6E6E6E;
+    border-left: 1px solid #6E6E6E;
+    border-right: 1px solid #7B7B7B;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    border-bottom-left-radius: 5px;
   }
 
     .calculator-keypad-inputkeys-numberkeys-numberkey {
-      border: 1px solid grey;
+      border-bottom: 1px solid #7B7B7B;
       flex: 1 0 30%;
       text-align: center;
+
+    }
+
+    .calculator-keypad-inputkeys-numberkeys-numberkey:last-child,
+    .calculator-keypad-inputkeys-numberkeys-numberkey:nth-last-child(2) {
+      border-bottom: 0;
     }
 
     .calculator-keypad-inputkeys-numberkeys :nth-last-child(2) {
       border-bottom-left-radius: 5px;
+    }
+
+    .calculator-keypad-inputkeys-numberkeys :nth-child(3n) {
+      border-left: 1px solid #7B7B7B;
+    }
+
+    .calculator-keypad-inputkeys-numberkeys :nth-child(1),
+    .calculator-keypad-inputkeys-numberkeys :nth-child(4),
+    .calculator-keypad-inputkeys-numberkeys :nth-child(7) {
+      border-right: 1px solid #7B7B7B;
     }
 
     .calculator-keypad-inputkeys-numberkeys :last-child {
