@@ -19,13 +19,35 @@
 }
 
 .calculator-outputview {
-  background-color: lightblue;
   color: white;
-  height: 80px;
 }
 
-.calculator-outputview-output{
-  font-size: 3em;
-  padding: .5em .2em;
-  text-align: right;
+  .calculator-outputview-output{
+    font-size: 3em;
+    padding: .5em .2em 0 0;
+    text-align: right;
+  }
+
+.calculator-keypad {
+  display: flex;
+  flex-direction: row;
 }
+
+  .calculator-keypad-inputkeys{
+    background-color: pink;
+    flex: .75;
+  }
+
+  .calculator-keypad-functionkeys{
+    background-color: lime;
+    flex: .25;
+  }
+
+  .calculator-keypad-inputkeys-adjustkeys {
+    background-color: lightblue;
+    display: flex;
+    flex-direction: row;
+  }
+
+    .calculator-keypad-inputkeys-adjustkeys-adjustkey{
+    }
