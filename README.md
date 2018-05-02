@@ -36,12 +36,12 @@ Style Guide   : [Style Guide](https://google.github.io/styleguide/htmlcssguide.h
 normalize.css : [Normalize.css](https://necolas.github.io/normalize.css/)
 
 #### Specs
-- Calculator positioned in the center, vertically and horizontally
-- Window will scroll if it is too small for the calculator, vertically and horizontally
-- Buttons have a CSS transition, 100ms, to a slightly darker color on hover
-- Buttons have a CSS transition, 100ms, to a slightly darker color on click
-- Class names are name-spaced under `.calculator-…`
-- Stylesheet contains little to no duplicate style declarations
+* Calculator positioned in the center, vertically and horizontally
+* Window will scroll if it is too small for the calculator, vertically and horizontally
+* Buttons have a CSS transition, 100ms, to a slightly darker color on hover
+* Buttons have a CSS transition, 100ms, to a slightly darker color on click
+* Class names are name-spaced under `.calculator-…`
+* Stylesheet contains little to no duplicate style declarations
 
 ### The Plan
 Read the style guide
@@ -62,10 +62,10 @@ Read the style guide
      * [Overflow-x](https://www.w3schools.com/cssref/css3_pr_overflow-x.asp)
 
 *Build*
-  - Structure
+  * Structure
     * Normalize
     * Roborto
-  - Container
+  * Container
     * Centered
     * Drop Shadow
   * Output View
@@ -83,10 +83,10 @@ Read the style guide
     * Position
       * block/inline block?
     * style
-  - Hover Effect
-  - Click Effect
-  - Keypad symbols
-  - Transitions
+  * Hover Effect
+  * Click Effect
+  * Transitions
+  * Keypad symbols
 
 
 
