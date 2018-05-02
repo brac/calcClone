@@ -20,12 +20,12 @@
 
 .calculator-outputview {
   background-color: #7B7B7B;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  color: white;
   border-left: 1px solid #6E6E6E;
   border-right: 1px solid #6E6E6E;
   border-top: 1px solid #6E6E6E;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: white;
 }
 
   .calculator-outputview-output{
@@ -37,14 +37,14 @@
 .calculator-keypad {
   display: flex;
   flex-direction: row;
-  user-select: none;
   font-size: 1.2em;
+  user-select: none;
 }
 
   .calculator-keypad-inputkeys {
     display: flex;
-    flex-direction: column;
     flex: .75;
+    flex-direction: column;
   }
 
   .calculator-keypad-functionkeys-functionkey,
@@ -57,25 +57,22 @@
     background-color: #F38026;
     border-bottom-right-radius: 5px;
     border-right: 1px solid #6E6E6E;
-    flex: .25;
     display: flex;
+    flex: .25;
     flex-direction: column;
   }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey,
     .calculator-keypad-inputkeys-numberkeys-numberkey {
-      /*padding: .66em 0 .66em 0;*/
-    }
-
-    .calculator-keypad-functionkeys-functionkey {
-      flex: 1 0 auto;
+      padding: .66em 0 .66em 0;
     }
 
     .calculator-keypad-functionkeys-functionkey {
       border-bottom: 1px solid #6E6E6E;
       color: white;
-      text-align: center;
+      flex: 1 0 auto;
       font-size: 2em;
+      text-align: center;
     }
 
     .calculator-keypad-functionkeys-functionkey:hover {
@@ -93,8 +90,8 @@
   .calculator-keypad-inputkeys-adjustkeys {
     background-color: #CDCDCD;
     display: flex;
-    flex-direction: row;
     flex: 1 0 auto;
+    flex-direction: row;
   }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey {
@@ -127,10 +124,10 @@
     border-left: 1px solid #6E6E6E;
     border-right: 1px solid #7B7B7B;
     display: flex;
+    flex: 1 0 auto;
     flex-direction: row;
     flex-wrap: wrap;
     border-bottom-left-radius: 5px;
-    flex: 1 0 auto;
 
   }
 
