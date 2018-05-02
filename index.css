@@ -39,8 +39,8 @@
 
   .calculator-keypad-functionkeys {
     background-color: #F38026;
-    flex: .25;
     border-bottom-right-radius: 5px;
+    flex: .25;
 
   }
 
@@ -51,9 +51,9 @@
     }
 
     .calculator-keypad-functionkeys-functionkey {
+      border: 1px solid grey;
       color: white;
       text-align: center;
-      border: 1px solid grey;
     }
 
 
@@ -62,7 +62,6 @@
       border-bottom-right-radius: 5px;
     }
 
-
   .calculator-keypad-inputkeys-adjustkeys {
     background-color: #CDCDCD;
     display: flex;
@@ -70,9 +69,9 @@
   }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey {
-      text-align: center;
-      flex: 1 0 30%;
       border: 1px solid grey;
+      flex: 1 0 30%;
+      text-align: center;
     }
 
   .calculator-keypad-inputkeys-numberkeys {
@@ -83,9 +82,13 @@
   }
 
     .calculator-keypad-inputkeys-numberkeys-numberkey {
-      text-align: center;
-      flex: 1 0 30%;
       border: 1px solid grey;
+      flex: 1 0 30%;
+      text-align: center;
+    }
+
+    .calculator-keypad-inputkeys-numberkeys :nth-last-child(2) {
+      border-bottom-left-radius: 5px;
     }
 
     .calculator-keypad-inputkeys-numberkeys :last-child {
