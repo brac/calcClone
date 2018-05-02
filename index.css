@@ -5,7 +5,7 @@
 }
 
 .calculator {
-  background-color: grey;
+  background-color: #878787;
   bottom: 0;
   border-radius: 5px;
   box-shadow: 10px 10px 100px grey;
@@ -34,25 +34,34 @@
 }
 
   .calculator-keypad-inputkeys {
-    background-color: pink;
     flex: .75;
   }
 
   .calculator-keypad-functionkeys {
-    background-color: lime;
     flex: .25;
   }
 
+    .calculator-keypad-functionkeys-functionkey {
+      background-color: #F38026;
+      text-align: center;
+      /*border-bottom: 1px solid grey;*/
+      border: 1px solid grey;
+    }
+
   .calculator-keypad-inputkeys-adjustkeys {
-    background-color: lightblue;
+    background-color: #CDCDCD;
     display: flex;
     flex-direction: row;
   }
 
     .calculator-keypad-inputkeys-adjustkeys-adjustkey {
+      text-align: center;
+      flex: 1 0 30%;
+      border: 1px solid grey;
     }
 
   .calculator-keypad-inputkeys-numberkeys {
+    background-color: #D9D9D9;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
