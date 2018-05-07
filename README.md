@@ -147,15 +147,15 @@ The Back End, well kinda.
 
 ### Skills
 - ES5 syntax
-- Registering event listeners
-- Binding to the DOM Ready event
+* Registering event listeners
+* Binding to the DOM Ready event
 - JavaScript closures
-- JavaScript callbacks
-- JavaScript formatting
-- Event Delegation
-- Event bubbling
-- Querying the DOM API
-- Manipulating the DOM using the DOM API
+* JavaScript callbacks
+* JavaScript formatting
+* Event Delegation
+* Event bubbling
+* Querying the DOM API
+* Manipulating the DOM using the DOM API
 - Avoiding using the DOM for state
 - Store the state of your calculator in `JavaScript`
 - NOT use `jQuery` or any other `JavaScript` libraries or frameworks
