@@ -7,17 +7,27 @@ document.addEventListener('DOMContentLoaded', function() {
   var keypad = document.querySelector('.calculator-keypad');
   var outputText = document.querySelector('.calculator-outputview-output');
   var input = '';
+  var fontSize = outputText.style.fontSize;
 
   // TODO: Combine the click and keypress
   keypad.addEventListener('click', function(event){
+    if (fontSize == '') {
+      fontSize = '3';
+    }
 
     input += event.target.textContent;
-    if (input.length > 8) {
-      console.log('too big!');
-      outputText.style.fontSize = '2em';
-    }
-    outputText.textContent = input;
 
+    // Adjust font size as number increases
+    if (input.length > 8) {
+      if (fontSize > 0.5) {
+        fontSize -= 0.25;
+        fontSize = Math.round(fontSize * 100) / 100;
+        outputText.style.fontSize = `${fontSize}em`;
+      }
+    }
+
+    console.log(fontSize);
+    outputText.textContent = input;
   });
 
   document.addEventListener('keypress', function(event) {
