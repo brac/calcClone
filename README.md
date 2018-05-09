@@ -375,16 +375,301 @@ assertEquals(3, obj.method());
  */
 function destructured(ordinary, {num, str = 'some default'} = {})
 ```
-  -
+  - Constructors are optional for concrete classes. Subclass constructors must call `super` before setting fields or accessing `this`.
+
+ - Fields (properties other than methods) must be set in the constructor. Fields that are never changed should be defined with `const` and private fields should have `private` and a trailing underscore. Fields are *never* set on a concrete class' prototype. Do not add or remove properties from an instance after the constructor is finished since it will hinder pptimization. If you must initialize a field later, set it to `undefined` in the constructor to prevent later shape changes. Look up `struct`
+
+ - Computer properties should only be used in classes when the property is a symbol, and even then sparingly.
+
+ - Where it does not interfere with readability, prefer module-local functions over private static methods.
+
+ - Per-instance properties should be defined in the constructor after the call to the super class constructor, if there is a super class. Methods should be defined on the prototype of the constructor.
+
+ - Do not manipulate prototypes directly
+
+ - Do not use JavaScript getter and setter properties. They are potentially surprising and difficult to reason about, and have limited support in the compiler. Provide ordinary methods instead
+
+ - The toString method may be overridden, but must always succeed and never have visible side effects.
+
+#### Functions
+  - Exported functions may be defined directly on the `exports` object:
+```javascript
+exports = {exportedFunction, anotherExportedFunction};
+```
+  - Prefer arrow functions over the function keyword, particularly for nested functions
+
+  - When defining generator functions, attach the `*` to the `function` keyword when present, and separate it with a space from the name of the function. When using delegating yields, attach the `*` to the `yield` keyword.
+
+  - Use JSDoc annotations for parameters, authors, everything. You can use inline annotation if you must as long as it is immediately before the parameter name. Below is a general example of JSDoc annotation, without the inline annotation just mentioned.
+```javascript
+/**
+ * Creates an instance of Circle.
+ *
+ * @constructor
+ * @author: moi
+ * @this {Circle}
+ * @param {number} r The desired radius of the circle.
+ */
+function Circle(r) {
+    /** @private */ this.radius = r;
+    /** @private */ this.circumference = 2 * Math.PI * r;
+}
+```
+  - Optional parameters are permitted using the equals operator in the parameter list. Optional parameters must include spaces on both sides of the equals operator, be named exactly like required parameters (i.e., not prefixed with opt_), use the = suffix in their JSDoc type, come after required parameters, and not use initializers that produce observable side effects. All optional parameters must have a default value in the function declaration, even if that value is undefined.
+
+```javascript
+/**
+ * @param {string} required This parameter is always needed.
+ * @param {string=} optional This parameter can be omitted.
+ * @param {!Node=} node Another optional parameter.
+ */
+function maybeDoSomething(required, optional = '', node = undefined) {}
+```
+  - Use default parameters sparingly. Prefer destructuring
+  - Use a rest parameter instead of accessing arguments, ...
+```javascript
+/**
+ * @param {!Array<string>} array This is an ordinary parameter.
+ * @param {...number} numbers The remainder of arguments are all numbers.
+ */
+function variadic(array, ...numbers) {}
+```
+  - Function calls may use the spread operator (...)
+```javascript
+function myFunction(...elements) {}
+myFunction(...array, ...iterable, ...generator());
+```
+
+#### String literals
+  - Use single quotes for string literals.
+  - Use template strings over complex string concatenation.
+  - No line continuations, ending a line inside a string literal with a backslash, instead concat multiple strings.
+
+#### Number Literals
+  - Numbers may be specified in decimal, hex, octal, or binary. Use exactly 0x, 0o, and 0b prefixes, with lowercase letters, for hex, octal, and binary, respectively. Never include a leading zero unless it is immediately followed by x, o, or b
+
+#### Control Structures
+  - `for`-`of` loops should be preferred when possible
+  - `for`-`in` loops may only be used on dict-style objects, never an array
+  - Prefer `for`-`of` and `Object.keys` over `for`-`in` when possible
+
+#### Exceptions
+  - Always throw `new Error()`, never string literals or objects.
+  - Custom exceptions are great, use when native Error is not enough.
+  - Prefer throwing exceptions over ad-hoc error-handling approaches (such as passing an error container reference type, or returning an object with an error property).
+  - Never have an empty catch block, unless documented clearly, but still probably not.
+  - Every swtich case will end with a `break`, `return` or `throw`. If it doesn't then it is considered to 'fall-through' to the next case block. This is ok as longas it is commented with `//fall through` where the exit keywould would normally be.
+  - The `default` case is always present, even if it is empty
+
+#### this
+  - Only use `this` in class constructors and methods or in arrow functions defined within class constructors and methods. Any other use much have an explict `@this` declared.
+  - Never use `this` to refer to the global object, the context of an `eval`, the target of an event, or unnecessarily `call()ed` or `apply()ed` functions
+
+#### Disallowed!
+  - Do not use `with`
+  - Do not use `eval`
+  - Do not use `Function(...string)`
+  - Do not use automatic semicolon insertion, insert your own
+  - Do not use non-standard features
+  - Do not use `new` on primitve object wrappers, `Number`, `String` etc.
+  - Do not modify builtin types by adding methods to constructors or prototypes
+  - Do not add symbols to the global object unless absolutely necessary.
+
+#### Naming
+  - Be as descriptive as possible
+  - It is better to be readable than concise
+  - Package names are lowerCamelCase
+  - Class, interface, record and typedef names are UpperCamelCase
+  - Type names are typically nouns or noun phrases
+  - Method names are lowerCamelCase
+  - Method names are typically verbs
+  - Enum names are UpperCamelCase
+  - Constant names are CONSTANT_CASE. Only name a constant as such if is not going to change, not mearly if you do not intend for it to change
+  - Local aliases should be used when they improve readability over fully-qualified names.
+  - Non-constant names are lowerCamelCase, usually nouns
+  - Parameters names are lowerCamelCase
+  - Local variable name names are lowerCamelCase
+  - Template parameter names should be concise, single word and all caps; `TYPE` or `THIS`
+
+### JSDoc
+Used on all classes, fields and methods.
+
+Basic example:
+```javascript
+/**
+ * Multiple lines of JSDoc text are written here,
+ * wrapped normally.
+ * @param {number} arg A number to do something to.
+ */
+function doSomething(arg) { … }
+```
+or
+```javascript
+/** @const @private {!Foo} A short bit of JSDoc. */
+this.foo_ = foo;
+```
+Many tools extract data from JSDoc comments so it is important to be careful about these.
+
+If you need to split your comment into multiple lines then use the `/**` and `*/`
+
+JSDoc is written in Markdown, though it may include HTML if necessary. So be sure to include hypens and approrpaite Markdown syntax so your metadata will provide the correct values.
+
+- JSDoc tags
+  - the @private, @const identifers. Simple tags that do not require additional data may be combined onto the same line:
+```javascript
+/**
+ * Place more complex annotations (like "implements" and "template")
+ * on their own lines.  Multiple simple tags (like "export" and "final")
+ * may be combined in one line.
+ * @export @final
+ * @implements {Iterable<TYPE>}
+ * @template TYPE
+ */
+class MyClass {
+  /**
+   * @param {!ObjType} obj Some object.
+   * @param {number=} num An optional number.
+   */
+  constructor(obj, num = 42) {
+    /** @private @const {!Array<!ObjType|number>} */
+    this.data_ = [obj, num];
+  }
+}
+```
+  - Line wrap block tags with four spaces
+  - Top Level Comments:
+    - A file may have a top-level file overview. A copyright notice , author information, and default visibility level are optional. File overviews are generally recommended whenever a file consists of more than a single class definition. The top level comment is designed to orient readers unfamiliar with the code to what is in this file. If present, it may provide a description of the file's contents and any dependencies or compatibility information. Wrapped lines are not indented.
+
+```javascript
+/**
+ * @fileoverview Description of file, its uses and information
+ * about its dependencies.
+ * @package
+ */
+```
+  - Classes, interfaces and records must be documented with a description and any template parameters, implemented interfaces, visibility, or other appropriate tags.
+```javascript
+/**
+ * A fancier event target that does cool things.
+ * @implements {Iterable<string>}
+ */
+class MyFancyTarget extends EventTarget {
+  /**
+   * @param {string} arg1 An argument that makes this more interesting.
+   * @param {!Array<number>} arg2 List of numbers to be processed.
+   */
+  constructor(arg1, arg2) {
+    // ...
+  }
+};
+```
+  - Enums and typedefs must be documented
+```javascript
+/**
+ * A useful type union, which is reused often.
+ * @typedef {!Bandersnatch|!BandersnatchType}
+ */
+let CoolUnionType;
 
 
+/**
+ * Types of bandersnatches.
+ * @enum {string}
+ */
+const BandersnatchType = {
+  /** This kind is really frumious. */
+  FRUMIOUS: 'frumious',
+  /** The less-frumious kind. */
+  MANXOME: 'manxome',
+};
+```
+  - Parameter and return types must be documented
+```javascript
+/** This is a class. */
+class SomeClass extends SomeBaseClass {
+  /**
+   * Operates on an instance of MyClass and returns something.
+   * @param {!MyClass} obj An object that for some reason needs detailed
+   *     explanation that spans multiple lines.
+   * @param {!OtherClass} obviousOtherClass
+   * @return {boolean} Whether something occurred.
+   */
+  someMethod(obj, obviousOtherClass) { ... }
 
+  /** @override */
+  overriddenMethod(param) { ... }
+}
 
+/**
+ * Demonstrates how top-level functions follow the same rules.  This one
+ * makes an array.
+ * @param {TYPE} arg
+ * @return {!Array<TYPE>}
+ * @template TYPE
+ */
+function makeArray(arg) { ... }
+```
+  - Property types must be documented
+```javascript
+/** My class. */
+class MyClass {
+  /** @param {string=} someString */
+  constructor(someString = 'default string') {
+    /** @private @const */
+    this.someString_ = someString;
 
+    /** @private @const {!OtherType} */
+    this.someOtherThing_ = functionThatReturnsAThing();
 
+    /**
+     * Maximum number of things per pane.
+     * @type {number}
+     */
+    this.someProperty = 4;
+  }
+}
 
+/**
+ * The number of times we'll try before giving up.
+ * @const
+ */
+MyClass.RETRY_COUNT = 33;
+```
+  - Always specify template parameters
+```javascript
+const /** !Object<string, !User> */ users = {};
+const /** !Array<string> */ books = [];
+```
 
+### Policies
+#### Be Consistent
+Do what the code base is doing, and be consistent in all you do.
 
+Use all the warnings `--warning_level=VERBOSE`
+
+#### When encountering a Warning
+  - Undersatnd it
+  - Fix it or Work around it
+  - Determine if it is a false alarm
+    - Add a comment to concince the reader it is false and then supress the warning and apply the `@supress` annotation
+  - Leave a TODO comment as a last resort. Do not suppress the warning it should remain visible until take care of properly.
+  - Suppress a warning at the narrowest resonable scope
+
+#### Deprecation
+  - Mark deprecated methods, classes or interfaces with `@deprecated` annotations.
+
+#### Reformatting existing code
+1. It is not required to change all existing code to meet current style guidelines. Avoid undue code churn
+2. Do not make lots of style changes if they are not critical to the central focus of your task.
+
+#### Yet More
+  - Decalre variables as close as possible to first use
+  - Do not use blocked scoped functins. Insted assing the function to a `var`.
+```javascript
+if (x) {
+  var foo = function() {};
+}
+```
 
 
 

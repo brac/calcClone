@@ -1,38 +1,32 @@
-
+// TODO: Add JSDoc annotations
+// TODO: Disable drag effect on keys
 
 document.addEventListener('DOMContentLoaded', function() {
-  var keypad = document.querySelector('.calculator-keypad');
-  var outputText = document.querySelector('.calculator-outputview-output');
-  var input = '';
-  var fontSize = outputText.style.fontSize;
+  let keypad = document.querySelector('.calculator-keypad');
+  let outputText = document.querySelector('.calculator-outputview-output');
+  let currentNumber = '';
+  let fontSize = outputText.style.fontSize;
 
   function add(number) {
     return `You passed ${number}`;
   }
 
-  function calculator(event) {
-    // Determine if HTML click or key press
-    if (!event.key) {
-      input += event.target.textContent;
-    } else {
-      input += event.key;
-    }
+  function calculator(key) {
 
-    // If input is not an integer...
-    if (input != parseInt(input) ) {
-      // TODO: Input carries the whole output text
-      //   ensure that the input only contains the most recent entry
-      console.log(input);
+    currentNumber += key;
+
+    // If key is not an integer...
+    if (key != parseInt(key) ) {
+
     }
 
 
-
+    // Decrease font size as number increases length
     if (fontSize == '') {
       fontSize = '3';
     }
 
-    // Decrease font size as number increases length
-    if (input.length > 8) {
+    if (currentNumber.length > 8) {
       if (fontSize > 0.5) {
         fontSize -= 0.25;
         fontSize = Math.round(fontSize * 100) / 100;
@@ -40,15 +34,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    outputText.textContent = input;
+    // Print the new number to the output view
+    outputText.textContent = currentNumber;
   }
 
   keypad.addEventListener('click', function(event){
-    calculator(event);
+    calculator(event.target.textContent);
   });
 
   document.addEventListener('keypress', function(event) {
-    calculator(event);
+    calculator(event.key);
   });
 
   // TODO: Function Keys
@@ -64,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // %
 
   // TODO: Compute math equaltion
-    // Store value when input is computational value
+    // Store value when currentNumber is computational value
 
   // TODO: Print result to output window
     // Update output window as you go
