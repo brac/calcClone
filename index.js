@@ -1,25 +1,24 @@
 // TODO: Add JSDoc annotations
 // TODO: Disable drag effect on keys
+// TODO: Add Flash when key typed
 
-document.addEventListener('DOMContentLoaded', function() {
-  let keypad = document.querySelector('.calculator-keypad');
-  let outputText = document.querySelector('.calculator-outputview-output');
+(function() {
+  let keypad = '';
+  let outputText = '';
   let currentNumber = '';
-  let fontSize = outputText.style.fontSize;
+  let fontSize = '';
 
   function add(number) {
     return `You passed ${number}`;
   }
 
   function calculator(key) {
-
     currentNumber += key;
 
     // If key is not an integer...
     if (key != parseInt(key) ) {
-
+      console.log('Not a number key!');
     }
-
 
     // Decrease font size as number increases length
     if (fontSize == '') {
@@ -36,32 +35,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Print the new number to the output view
     outputText.textContent = currentNumber;
+
+        // TODO: Function Keys
+      // /
+      // x
+      // -
+      // +
+      // =
+
+    // TODO: Adjust Keys
+      // AC
+      // +/-
+      // %
+
+    // TODO: Compute math equaltion
+      // Store value when currentNumber is computational value
   }
 
-  keypad.addEventListener('click', function(event){
-    calculator(event.target.textContent);
+  document.addEventListener('DOMContentLoaded', function() {
+    keypad = document.querySelector('.calculator-keypad');
+    outputText = document.querySelector('.calculator-outputview-output');
+    fontSize = outputText.style.fontSize;
+
+    keypad.addEventListener('click', function(event){
+      calculator(event.target.textContent);
+    });
+
+    document.addEventListener('keypress', function(event) {
+      calculator(event.key);
+    });
   });
-
-  document.addEventListener('keypress', function(event) {
-    calculator(event.key);
-  });
-
-  // TODO: Function Keys
-    // /
-    // x
-    // -
-    // +
-    // =
-
-  // TODO: Adjust Keys
-    // AC
-    // +/-
-    // %
-
-  // TODO: Compute math equaltion
-    // Store value when currentNumber is computational value
-
-  // TODO: Print result to output window
-    // Update output window as you go
-    // Output final result
-});
+})();
