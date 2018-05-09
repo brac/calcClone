@@ -9,16 +9,21 @@
   let fontSize = '';
 
   function add(number) {
-    return `You passed ${number}`;
+    return `You passed ${number} to be added`;
   }
 
   function calculator(key) {
-    currentNumber += key;
 
-    // If key is not an integer...
+    // Preform computations
     if (key != parseInt(key) ) {
-      console.log('Not a number key!');
+      switch (key){
+        case '+':
+          console.log(add(currentNumber));
+      }
+    } else {
+      currentNumber += key;
     }
+
 
     // Decrease font size as number increases length
     if (fontSize == '') {
@@ -62,7 +67,10 @@
     });
 
     document.addEventListener('keypress', function(event) {
-      calculator(event.key);
+      if (/[0-9]|\/|\*|\-|\+|Enter|a|=/.test(event.key)) {
+        console.log('huzzah!');
+        calculator(event.key);
+      }
     });
   });
 })();
