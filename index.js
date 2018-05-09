@@ -11,11 +11,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function calculator(event) {
+    // Determine if HTML click or key press
     if (!event.key) {
       input += event.target.textContent;
     } else {
       input += event.key;
     }
+
+    // If input is not an integer...
+    if (input != parseInt(input) ) {
+      // TODO: Input carries the whole output text
+      //   ensure that the input only contains the most recent entry
+      console.log(input);
+    }
+
+
 
     if (fontSize == '') {
       fontSize = '3';
@@ -30,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    console.log(fontSize);
     outputText.textContent = input;
   }
 
