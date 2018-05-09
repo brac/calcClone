@@ -1,6 +1,4 @@
-function add(number) {
-  return `You passed ${number}`;
-}
+
 
 document.addEventListener('DOMContentLoaded', function() {
   var keypad = document.querySelector('.calculator-keypad');
@@ -8,15 +6,22 @@ document.addEventListener('DOMContentLoaded', function() {
   var input = '';
   var fontSize = outputText.style.fontSize;
 
-  // TODO: Combine the click and keypress
-  keypad.addEventListener('click', function(event){
+  function add(number) {
+    return `You passed ${number}`;
+  }
+
+  function calculator(event) {
+    if (!event.key) {
+      input += event.target.textContent;
+    } else {
+      input += event.key;
+    }
+
     if (fontSize == '') {
       fontSize = '3';
     }
 
-    input += event.target.textContent;
-
-    // Adjust font size as number increases
+    // Decrease font size as number increases length
     if (input.length > 8) {
       if (fontSize > 0.5) {
         fontSize -= 0.25;
@@ -27,13 +32,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log(fontSize);
     outputText.textContent = input;
+  }
+
+  keypad.addEventListener('click', function(event){
+    calculator(event);
   });
 
   document.addEventListener('keypress', function(event) {
-    outputText.textContent = event.key;
+    calculator(event);
   });
 
-  // TODO: Make the output get deterministically smaller
+  // TODO: Function Keys
+    // /
+    // x
+    // -
+    // +
+    // =
+
+  // TODO: Adjust Keys
+    // AC
+    // +/-
+    // %
 
   // TODO: Compute math equaltion
     // Store value when input is computational value
