@@ -3,7 +3,6 @@ function add(number) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
   var keypad = document.querySelector('.calculator-keypad');
   var outputText = document.querySelector('.calculator-outputview-output');
   var input = '';
