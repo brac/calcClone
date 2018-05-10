@@ -166,8 +166,11 @@
       background-color: #ACAEAE;
     }
 
+    .calculator-keypad-inputkeys-numberkeys-numberkey-flash,
     .calculator-keypad-inputkeys-numberkeys-numberkey:active {
       background-color: #7B7B7B;
     }
+
+
 
 

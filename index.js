@@ -1,4 +1,3 @@
-
 // TODO: Add JSDoc annotations
 // TODO: Disable drag effect on keys
 // TODO: Add Flash when key typed
@@ -7,7 +6,6 @@
   // /
   // x
   // -
-  // +
   // =
 
 // TODO: Adjust Keys
@@ -35,16 +33,23 @@
     });
 
     document.addEventListener('keypress', function(event) {
+
       if (/[0-9]/.test(event.key)) {
+        keyFlash(event.key);
+
         calculator(event.key);
-      } else if (/\/|\*|\-|\+|Enter|a|=/.test(event.key)) {
+      } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(event.key)) {
+        keyFlash(event.key);
 
         switch (event.key) {
           case 'a':
             oldNumber = '';
+            currentNumber = '';
+            resultNumber = '';
             updateOutputView('0');
             break;
 
+          // TODO: Fix if + is hit multiple times
           case '+':
             if (oldNumber == '') {
               oldNumber = currentNumber;
@@ -52,22 +57,29 @@
               break;
             }
 
-
             resultNumber = add(oldNumber, currentNumber);
-            console.log({oldNumber, currentNumber, resultNumber});
-
             oldNumber = resultNumber;
             currentNumber = '';
             updateOutputView(resultNumber);
+            break;
         }
       }
     });
   });
 
+  function keyFlash(key){
+    console.log(key);
+    const el = document.querySelector(`[id='${key}']`);
+    el.classList.add('calculator-keypad-inputkeys-numberkeys-numberkey-flash');
+
+    setTimeout(function() {
+      el.classList.remove('calculator-keypad-inputkeys-numberkeys-numberkey-flash');
+    }, 100);
+  }
+
   function calculator(key) {
     // Add the last key pressed to the display
     currentNumber += key;
-    checkOutputViewTextSize();
     updateOutputView(currentNumber);
   }
 
@@ -78,6 +90,7 @@
   }
 
   function updateOutputView(string) {
+    checkOutputViewTextSize();
     outputText.textContent = string;
   }
 
