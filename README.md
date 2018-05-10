@@ -173,7 +173,7 @@ The Back End, well kinda.
 - When the length of the number displayed exceeds the width available, the font-size deterministically drops
 
 Calculator functionality and behavior is consistent with [Mac calculator rules](#calculator-rules-and-examples):
-- pressing `AC` displays `0`
+* pressing `AC` displays `0`
 - pressing `AC` `8` `+/-` displays `-8`
 - pressing `AC` `-5` `+/-` displays `5`
 - pressing `AC` `99` `%` displays `0.99`
@@ -199,7 +199,7 @@ Calculator functionality and behavior is consistent with [Mac calculator rules](
 Look up
   - [JS Style Guide](https://google.github.io/styleguide/jsguide.html)
   - Listen for keypress
-  - Make button flash active on keypress - logic?
+  * Make button flash active on keypress
   * Difference between ES5 and ES6
       No Fat Arrows
       No Promises
