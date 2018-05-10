@@ -19,7 +19,7 @@
 
 (function() {
   let keypad = '';
-  let outputText = '';
+  let outputTextEl = '';
   let fontSize = '';
   let oldNumber = '';
   let resultNumber = '';
@@ -27,59 +27,80 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     keypad = document.querySelector('.calculator-keypad');
-    outputText = document.querySelector('.calculator-outputview-output');
+    outputTextEl = document.querySelector('.calculator-outputview-output');
 
     keypad.addEventListener('click', function(event){
-      calculator(event.target.textContent);
+      calculatorInput(event.target.textContent);
     });
 
     document.addEventListener('keypress', function(event) {
-
       if (/[0-9]/.test(event.key)) {
-        calculator(event.key);
-
-      } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(event.key)) {
-
+        calculatorInput(event.key);
+      } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(event.key)){
         keyFlash(event.key);
 
-        switch (event.key) {
-          case 'a':
-            oldNumber = '';
-            displayNumber = '';
-            resultNumber = '';
-            updateOutputView('0');
-            break;
+        // This works!
+        console.log(calculator.add(5, 10));
 
-          // TODO: Fix if + is hit multiple times
-          case '+':
-            if (oldNumber == '') {
-              oldNumber = displayNumber;
-              displayNumber = '';
-              break;
-            }
-
-            resultNumber = add(oldNumber, displayNumber);
-            oldNumber = resultNumber;
-            displayNumber = '';
-            updateOutputView(resultNumber);
-            break;
-
-          // case '-':
-            // if (oldNumber == '') {
-              // oldNumber = displayNumber;
-              // displayNumber = '';
-              // break;
-            // }
-            //
-            // resultNumber = subtract(oldNumber, displayNumber);
-            // oldNumber = resultNumber;
-            // displayNumber = '';
-            // updateOutputView(resultNumber);
-            // break;
-        }
+        // TODO: Move your calculator to an object with methods
+          // This may help with storing different states of the value
       }
     });
   });
+
+  const calculator = {
+    add: function(oldNumber, displayNumber) {
+      resultNumber = parseInt(oldNumber) + parseInt(displayNumber);
+      return resultNumber;
+    }
+  };
+
+  function calculatorInput(key) {
+    keyFlash(key);
+    displayNumber += key;
+    updateOutputView(displayNumber);
+
+
+  //         switch (event.key) {
+  //           case 'a':
+  //             oldNumber = '';
+  //             displayNumber = '';
+  //             resultNumber = '';
+  //             updateOutputView('0');
+  //             break;
+
+  //           // TODO: Fix if + is hit multiple times
+  //           case '+':
+  //             if (oldNumber == '') {
+  //               oldNumber = displayNumber;
+  //               displayNumber = '';
+  //               break;
+  //             }
+
+  //             resultNumber = add(oldNumber, displayNumber);
+  //             oldNumber = resultNumber;
+  //             displayNumber = '';
+  //             updateOutputView(resultNumber);
+  //             break;
+
+  //           // case '-':
+  //             // if (oldNumber == '') {
+  //               // oldNumber = displayNumber;
+  //               // displayNumber = '';
+  //               // break;
+  //             // }
+  //             //
+  //             // resultNumber = subtract(oldNumber, displayNumber);
+  //             // oldNumber = resultNumber;
+  //             // displayNumber = '';
+  //             // updateOutputView(resultNumber);
+  //             // break;
+  //         }
+  //       }
+
+
+
+  }
 
   function keyFlash(key){
     // TODO: Add custom color for function and adjust keys cases
@@ -93,15 +114,6 @@
     }, 100);
   }
 
-  function calculator(key) {
-    // TODO: Move most of the switch statment logic in the key press
-    // add even listener to here
-    keyFlash(event.key);
-
-    displayNumber += key;
-    updateOutputView(displayNumber);
-  }
-
   function add(oldNumber, displayNumber) {
     resultNumber = parseInt(oldNumber) + parseInt(displayNumber);
     return resultNumber;
@@ -112,12 +124,17 @@
     return resultNumber;
   }
 
-  function updateOutputView(string) {
-    checkOutputViewTextSize();
-    outputText.textContent = string;
+  function divide(oldNumber, displayNumber) {
+    resultNumber = parseInt(oldNumber) / parseInt(displayNumber);
+    return resultNumber;
   }
 
-  function checkOutputViewTextSize(){
+  function multiply(oldNumber, displayNumber) {
+    resultNumber = parseInt(oldNumber) / parseInt(displayNumber);
+    return resultNumber;
+  }
+
+  function updateOutputView(string) {
     if (fontSize == '') {
       fontSize = '3';
     }
@@ -127,10 +144,10 @@
       if (fontSize > 0.5) {
         fontSize -= 0.25;
         fontSize = Math.round(fontSize * 100) / 100;
-        outputText.style.fontSize = `${fontSize}em`;
+        outputTextEl.style.fontSize = `${fontSize}em`;
       }
     }
-
-    // TODO: Increase font size as number decreases
+    outputTextEl.textContent = string;
   }
+
 })();

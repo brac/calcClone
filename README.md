@@ -197,8 +197,8 @@ Calculator functionality and behavior is consistent with [Mac calculator rules](
 
 ###Plan
 Look up
-  - [JS Style Guide](https://google.github.io/styleguide/jsguide.html)
-  - Listen for keypress
+  * [JS Style Guide](https://google.github.io/styleguide/jsguide.html)
+  * Listen for keypress
   * Make button flash active on keypress
   * Difference between ES5 and ES6
       No Fat Arrows
@@ -206,13 +206,14 @@ Look up
       No const or let
 
 Build
-  - Determining when a key was clicked
-    - addEventListeners the parent element
-    - check element textContent (or value?)
-  - Key Press functionality
-    - Which keyboard key was pressed
+  * Determining when a key was clicked
+    * addEventListeners the parent element
+    * check element textContent (or value?)
+  * Key Press functionality
+    * Which keyboard key was pressed
   - State
-    - Hold the data in memory?
+    * Hold the data in memory
+    - Solving in the right order
     - Storing sequential key presses
   - Mathematical Functions
     - Addition
@@ -225,13 +226,13 @@ Build
     - +/-
     - %
   - Output View
-    - Respond to key events
-      - Select output view element
-      - el.textContent(?) = mathResult/keyPress
-    - Update when computation is complete
-      - el.textContent(?) = mathResult/keyPress
-    - Resizing
-      - If string
+    * Respond to key events
+      * Select output view element
+      * el.textContent(?) += keypress
+    * Update when computation is complete
+      * el.textContent(?) = value
+    * Resizing
+
 
 ### Style Guides Notes
 [Javascript](https://google.github.io/styleguide/jsguide.html)
