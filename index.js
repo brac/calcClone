@@ -34,72 +34,68 @@
     });
 
     document.addEventListener('keypress', function(event) {
-      if (/[0-9]/.test(event.key)) {
-        calculatorInput(event.key);
-      } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(event.key)){
-        keyFlash(event.key);
-
-        // This works!
-        console.log(calculator.add(5, 10));
-
-        // TODO: Move your calculator to an object with methods
-          // This may help with storing different states of the value
-      }
+      calculatorInput(event.key);
     });
   });
 
   const calculator = {
-    add: function(oldNumber, displayNumber) {
+    addition: function(oldNumber, displayNumber) {
       resultNumber = parseInt(oldNumber) + parseInt(displayNumber);
       return resultNumber;
-    }
+    },
+
+    clear: function() {
+      oldNumber = '';
+      displayNumber = '';
+      resultNumber = '';
+      updateOutputView('0');
+    },
   };
 
   function calculatorInput(key) {
-    keyFlash(key);
-    displayNumber += key;
-    updateOutputView(displayNumber);
+    if (/[0-9]/.test(key)) {
+      keyFlash(key);
+      displayNumber += key;
+      updateOutputView(displayNumber);
 
+    } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(key)){
+      keyFlash(key);
+      oldNumber = resultNumber;
+      resultNumber = displayNumber;
 
-  //         switch (event.key) {
-  //           case 'a':
-  //             oldNumber = '';
-  //             displayNumber = '';
-  //             resultNumber = '';
-  //             updateOutputView('0');
-  //             break;
+      switch (key) {
+        case 'a':
+          calculator.clear();
+          break;
 
-  //           // TODO: Fix if + is hit multiple times
-  //           case '+':
-  //             if (oldNumber == '') {
-  //               oldNumber = displayNumber;
-  //               displayNumber = '';
-  //               break;
-  //             }
+        case '+':
+          if (oldNumber == '') {
+            oldNumber = displayNumber;
+            displayNumber = '';
+            break;
+          }
+          displayNumber = ''; //Reset for next input
+          resultNumber = calculator.addition(oldNumber, resultNumber);
+          updateOutputView(resultNumber);
+          break;
+      }
+    }
+  }
 
-  //             resultNumber = add(oldNumber, displayNumber);
-  //             oldNumber = resultNumber;
-  //             displayNumber = '';
-  //             updateOutputView(resultNumber);
-  //             break;
+  function updateOutputView(string) {
+    if (fontSize == '') {
+      fontSize = '3';
+    }
 
-  //           // case '-':
-  //             // if (oldNumber == '') {
-  //               // oldNumber = displayNumber;
-  //               // displayNumber = '';
-  //               // break;
-  //             // }
-  //             //
-  //             // resultNumber = subtract(oldNumber, displayNumber);
-  //             // oldNumber = resultNumber;
-  //             // displayNumber = '';
-  //             // updateOutputView(resultNumber);
-  //             // break;
-  //         }
-  //       }
-
-
-
+    // Decrease font size as number increases length
+    if (displayNumber.length > 8) {
+      if (fontSize > 0.5) {
+        fontSize -= 0.25;
+        fontSize = Math.round(fontSize * 100) / 100;
+        outputTextEl.style.fontSize = `${fontSize}em`;
+      }
+    }
+    outputTextEl.textContent = string;
   }
 
   function keyFlash(key){
@@ -133,21 +129,4 @@
     resultNumber = parseInt(oldNumber) / parseInt(displayNumber);
     return resultNumber;
   }
-
-  function updateOutputView(string) {
-    if (fontSize == '') {
-      fontSize = '3';
-    }
-
-    // Decrease font size as number increases length
-    if (displayNumber.length > 8) {
-      if (fontSize > 0.5) {
-        fontSize -= 0.25;
-        fontSize = Math.round(fontSize * 100) / 100;
-        outputTextEl.style.fontSize = `${fontSize}em`;
-      }
-    }
-    outputTextEl.textContent = string;
-  }
-
 })();
