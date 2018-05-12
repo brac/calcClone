@@ -12,17 +12,13 @@
 
 // TODO: Refactor
 
-// TODO: Determine how to keep value correct when switching to anohter
-  // computation. Currently pressing a plus or minus will immediatly
-  // preform that operation before getting the new input. Probably calling
-  // the computational operation too early
-
 (function() {
   let keypad = '';
   let outputTextEl = '';
   let fontSize = '';
-  let oldNumber = '';
-  let resultNumber = '';
+  let oldNumber = '0';
+  let currentNumber = '';
+  let resultNumber = '0';
   let displayNumber = '';
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -39,9 +35,14 @@
   });
 
   const calculator = {
-    addition: function(oldNumber, displayNumber) {
-      resultNumber = parseInt(oldNumber) + parseInt(displayNumber);
-      return resultNumber;
+    addition: function(num1, num2) {
+      result = parseInt(num1) + parseInt(num2);
+      return result;
+    },
+
+    subtract: function(num1, num2){
+      result = parseInt(num1) - parseInt(num2);
+      return result;
     },
 
     clear: function() {
@@ -60,8 +61,11 @@
 
     } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(key)){
       keyFlash(key);
-      oldNumber = resultNumber;
-      resultNumber = displayNumber;
+
+      // Isolate three numbers, the oldNumber, the CurrentNumber/DisplayNumber
+      // and the resultNumber. With these you may be able to better control
+      // the state.
+
 
       switch (key) {
         case 'a':
@@ -69,16 +73,51 @@
           break;
 
         case '+':
-          if (oldNumber == '') {
-            oldNumber = displayNumber;
-            displayNumber = '';
-            break;
-          }
-          displayNumber = ''; //Reset for next input
-          resultNumber = calculator.addition(oldNumber, resultNumber);
+          currentNumber = displayNumber;
+          resultNumber = calculator.addition(oldNumber, currentNumber);
           updateOutputView(resultNumber);
+          console.log(resultNumber);
+          oldNumber = resultNumber;
+          displayNumber = '';
+          break;
+
+        case 'Enter':
+          console.log(resultNumber);
+          updateOutputView(resultNumber);
+          displayNumber = '';
+          oldNumber = '0';
           break;
       }
+
+
+
+
+
+
+
+
+      //   case 'Enter':
+      //     console.log(resultNumber);
+      //     updateOutputView(resultNumber);
+      //     break;
+
+      //   case '+':
+      //     if (currentNumber == '') {
+      //       currentNumber = displayNumber;
+      //       displayNumber = '';
+      //       break;
+      //     }
+
+      //     if (resultNumber == '') {
+      //       resultNumber = currentNumber;
+      //     }
+
+      //     displayNumber = ''; //Reset for next input
+      //     resultNumber = calculator.addition(currentNumber, resultNumber);
+      //     updateOutputView(resultNumber);
+      //     oldNumber = resultNumber;
+      //     break;
+      // }
     }
   }
 
@@ -108,25 +147,5 @@
       el.classList.remove(
         'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
     }, 100);
-  }
-
-  function add(oldNumber, displayNumber) {
-    resultNumber = parseInt(oldNumber) + parseInt(displayNumber);
-    return resultNumber;
-  }
-
-  function subtract(oldNumber, displayNumber) {
-    resultNumber = parseInt(oldNumber) - parseInt(displayNumber);
-    return resultNumber;
-  }
-
-  function divide(oldNumber, displayNumber) {
-    resultNumber = parseInt(oldNumber) / parseInt(displayNumber);
-    return resultNumber;
-  }
-
-  function multiply(oldNumber, displayNumber) {
-    resultNumber = parseInt(oldNumber) / parseInt(displayNumber);
-    return resultNumber;
   }
 })();
