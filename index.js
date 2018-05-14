@@ -25,10 +25,25 @@
     return result;
   }
 
-  const createGroupedEquations = function(array, chunkSize) {
-    let groups = [], i;
+  function subtract(num1, num2) {
+   let result = parseInt(num1) - parseInt(num2);
+   return result;
+  }
 
-    for (let i =0; i < array.length;i += chunkSize) {
+  function divide(num1, num2) {
+    let result = parseInt(num1) / parseInt(num2);
+    return result;
+  }
+
+  function multiply(num1, num2) {
+    let result = parseInt(num1) * parseInt(num2);
+    return result;
+  }
+
+  const createGroupedEquations = function(array, chunkSize) {
+    let groups = [];
+
+    for (let i =0; i < array.length; i += chunkSize) {
       groups.push(array.slice(i, i + chunkSize));
     }
 
@@ -36,16 +51,6 @@
   };
 
   const calculator = {
-    addition: function(num1, num2) {
-      let result = parseInt(num1) + parseInt(num2);
-      return result;
-    },
-
-    subtract: function(num1, num2){
-      let result = parseInt(num1) - parseInt(num2);
-      return result;
-    },
-
     clear: function() {
       displayNumber = '';
       updateOutputView('0');
@@ -53,29 +58,41 @@
     },
 
     solve: function(arrayEquation) {
-      let result = 0;
-
-
       // Trim up if function key was the last key
       if ((arrayEquation[arrayEquation.length-1] == '')) {
         arrayEquation.pop();
       }
 
-      let startValue = arrayEquation[0];
+      // Set the starting number
+      let result = arrayEquation[0];
+
+      // Remove the starting number and group the equations
       arrayEquation.shift();
-
       const equations = createGroupedEquations(arrayEquation, 2);
-      console.log(startValue, equations);
 
+      // Iterate over each group of [function, value], determining the
+      // function and applying that with the provided value to the result
+      for (let i = 0; i < equations.length; i++) {
+        switch (equations[i][0]){
+          case '+':
+            result = add(result, equations[i][1]);
+            break;
 
+          case '-':
+            result = subtract(result, equations[i][1]);
+            break;
 
+          case '/':
+            result = divide(result, equations[i][1]);
+            break;
 
-
-
-      // for (let i = 0; i <= arrayEquation.length - 1; i++) {
-      //   if (parseInt(arrayEquation[i] && arrayEquation[i+2])) {
-      //   }
-      // }
+          case '*':
+            result = multiply(result, equations[i][1]);
+            break;
+        }
+      }
+      updateOutputView(result);
+      displayNumber = '';
       return result;
     }
   };
