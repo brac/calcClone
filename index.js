@@ -1,25 +1,11 @@
 // TODO: Add JSDoc annotations
 
-// TODO: Function Keys
-  // /
-  // x
-  // -
-  // =
-
-// TODO: Adjust Keys
-  // +/-
-  // %
-
-// TODO: Refactor
-
 (function() {
   let keypad = '';
   let outputTextEl = '';
   let fontSize = '';
-  let oldNumber = '0';
-  let currentNumber = '';
-  let resultNumber = '0';
   let displayNumber = '';
+  let history = [];
 
   document.addEventListener('DOMContentLoaded', function() {
     keypad = document.querySelector('.calculator-keypad');
@@ -34,23 +20,64 @@
     });
   });
 
+  function add(num1, num2) {
+    let result = parseInt(num1) + parseInt(num2);
+    return result;
+  }
+
+  const createGroupedEquations = function(array, chunkSize) {
+    let groups = [], i;
+
+    for (let i =0; i < array.length;i += chunkSize) {
+      groups.push(array.slice(i, i + chunkSize));
+    }
+
+    return groups;
+  };
+
   const calculator = {
     addition: function(num1, num2) {
-      result = parseInt(num1) + parseInt(num2);
+      let result = parseInt(num1) + parseInt(num2);
       return result;
     },
 
     subtract: function(num1, num2){
-      result = parseInt(num1) - parseInt(num2);
+      let result = parseInt(num1) - parseInt(num2);
       return result;
     },
 
     clear: function() {
-      oldNumber = '';
       displayNumber = '';
-      resultNumber = '';
       updateOutputView('0');
+      history = [];
     },
+
+    solve: function(arrayEquation) {
+      let result = 0;
+
+
+      // Trim up if function key was the last key
+      if ((arrayEquation[arrayEquation.length-1] == '')) {
+        arrayEquation.pop();
+      }
+
+      let startValue = arrayEquation[0];
+      arrayEquation.shift();
+
+      const equations = createGroupedEquations(arrayEquation, 2);
+      console.log(startValue, equations);
+
+
+
+
+
+
+      // for (let i = 0; i <= arrayEquation.length - 1; i++) {
+      //   if (parseInt(arrayEquation[i] && arrayEquation[i+2])) {
+      //   }
+      // }
+      return result;
+    }
   };
 
   function calculatorInput(key) {
@@ -62,62 +89,37 @@
     } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(key)){
       keyFlash(key);
 
-      // Isolate three numbers, the oldNumber, the CurrentNumber/DisplayNumber
-      // and the resultNumber. With these you may be able to better control
-      // the state.
-
-
       switch (key) {
         case 'a':
           calculator.clear();
           break;
 
         case '+':
-          currentNumber = displayNumber;
-          resultNumber = calculator.addition(oldNumber, currentNumber);
-          updateOutputView(resultNumber);
-          console.log(resultNumber);
-          oldNumber = resultNumber;
+          history.push(displayNumber, '+');
+          displayNumber = '';
+          // updateOutputView(resultNumber);
+          break;
+
+        case '-':
+          history.push(displayNumber, '-');
+          displayNumber = '';
+          break;
+
+        case '/':
+          history.push(displayNumber, '/');
+          displayNumber = '';
+          break;
+
+        case '*':
+          history.push(displayNumber, '*');
           displayNumber = '';
           break;
 
         case 'Enter':
-          console.log(resultNumber);
-          updateOutputView(resultNumber);
-          displayNumber = '';
-          oldNumber = '0';
+          history.push(displayNumber);
+          console.log(calculator.solve(history));
           break;
       }
-
-
-
-
-
-
-
-
-      //   case 'Enter':
-      //     console.log(resultNumber);
-      //     updateOutputView(resultNumber);
-      //     break;
-
-      //   case '+':
-      //     if (currentNumber == '') {
-      //       currentNumber = displayNumber;
-      //       displayNumber = '';
-      //       break;
-      //     }
-
-      //     if (resultNumber == '') {
-      //       resultNumber = currentNumber;
-      //     }
-
-      //     displayNumber = ''; //Reset for next input
-      //     resultNumber = calculator.addition(currentNumber, resultNumber);
-      //     updateOutputView(resultNumber);
-      //     oldNumber = resultNumber;
-      //     break;
-      // }
     }
   }
 
