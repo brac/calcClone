@@ -177,9 +177,9 @@ Calculator functionality and behavior is consistent with [Mac calculator rules](
 - pressing `AC` `8` `+/-` displays `-8`
 - pressing `AC` `-5` `+/-` displays `5`
 - pressing `AC` `99` `%` displays `0.99`
-- pressing `AC` `9` `+` `9` `-` `3` `=` displays `15`
+* pressing `AC` `9` `+` `9` `-` `3` `=` displays `15`
 - pressing `AC` `6` `+` `=` displays `12`
-- pressing `AC` `4` `x` `4` `=` displays `16`
+* pressing `AC` `4` `x` `4` `=` displays `16`
 - pressing `AC` `64` `+` `=` displays `128`
 - pressing `AC` `9` `+` displays `9`
 - pressing `AC` `8` `-` `5` `-` displays `3`
@@ -188,7 +188,7 @@ Calculator functionality and behavior is consistent with [Mac calculator rules](
 - pressing `AC` `5` `+` `3` `x` `6` `+` displays `23`
 - pressing `AC` `9` `x` displays `9`
 - pressing `AC` `3` `x` `5` `x` displays `15`
-- pressing `AC` `6` `/` `3` displays `2`
+* pressing `AC` `6` `/` `3` displays `2`
 - pressing `AC` `3` `x` `4` `x` `x` `x` displays `12`
 - pressing `AC` `4` `+` `3` `x` `6` `x` displays `18`
 - pressing `AC` `3` `+` `5` `x` displays `5`
@@ -211,18 +211,18 @@ Build
     * check element textContent (or value?)
   * Key Press functionality
     * Which keyboard key was pressed
-  - State
+  * State
     * Hold the data in memory
-    - Solving in the right order
-    - Storing sequential key presses
-  - Mathematical Functions
-    - Addition
-    - Subtraction
-    - Multiplication
-    - Division
-    - Equals
+    * Solving in the right order - but not in the correct order of operations
+    * Storing sequential key presses
+  * Mathematical Functions
+    * Addition
+    * Subtraction
+    * Multiplication
+    * Division
+    * Equals
   - Adjustment Functions
-    - AC
+    * AC
     - +/-
     - %
   - Output View

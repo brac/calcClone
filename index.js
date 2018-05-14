@@ -57,8 +57,10 @@
       history = [];
     },
 
-    solve: function(arrayEquation) {
+    solve: function(array) {
       // Trim up if function key was the last key
+      let arrayEquation = array.slice();
+
       if ((arrayEquation[arrayEquation.length-1] == '')) {
         arrayEquation.pop();
       }
@@ -103,18 +105,24 @@
       displayNumber += key;
       updateOutputView(displayNumber);
 
-    } else if (/\/|\*|\-|\+|Enter|a|=|\.|_|%/.test(key)){
+    } else if (/\/|\*|\-|\+|Enter|c|=|\.|_|%/.test(key)){
       keyFlash(key);
 
       switch (key) {
-        case 'a':
+        case 'c':
           calculator.clear();
           break;
 
         case '+':
           history.push(displayNumber, '+');
+
+          if (history.length > 3) {
+            let temp = history.slice();
+            temp.pop();
+            temp = calculator.solve(temp);
+          }
+
           displayNumber = '';
-          // updateOutputView(resultNumber);
           break;
 
         case '-':
@@ -134,7 +142,7 @@
 
         case 'Enter':
           history.push(displayNumber);
-          console.log(calculator.solve(history));
+          calculator.solve(history);
           break;
       }
     }
