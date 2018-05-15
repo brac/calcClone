@@ -49,60 +49,107 @@
           break;
 
         case '+':
-          history.push(displayNumber, '+');
+          // If the last key was also a function key, use the operator
+          // on the first value of itself
+          if (displayNumber == '') {
+            let test = quickSolve([parseInt(history[0]), parseInt(history[1]), parseInt(history[0])]);
+            break;
+          }
 
+          history.push(displayNumber, '+');
           if (history.length > 3) {
-            quickSolve(history);
+            updateOutputView(quickSolve(history));
           }
 
           displayNumber = '';
           break;
 
         case '-':
+          // If the last key was also a function key, use the operator
+          // on the first value of itself
+          if (displayNumber == '') {
+            let test = quickSolve([parseInt(history[0]), parseInt(history[1]), parseInt(history[0])]);
+            break;
+          }
+
           history.push(displayNumber, '-');
 
           if (history.length > 3) {
-            quickSolve(history);
+            updateOutputView(quickSolve(history));
           }
 
           displayNumber = '';
           break;
 
         case '÷':
+          // If the last key was also a function key, use the operator
+          // on the first value of itself
+          if (displayNumber == '') {
+            let test = quickSolve([parseInt(history[0]), parseInt(history[1]), parseInt(history[0])]);
+            break;
+          }
+
           history.push(displayNumber, '/');
 
           if (history.length > 3) {
-            quickSolve(history);
+            updateOutputView(quickSolve(history));
           }
 
           displayNumber = '';
           break;
 
         case '×':
+          // If the last key was also a function key, use the operator
+          // on the first value of itself
+          if (displayNumber == '') {
+            let test = quickSolve([parseInt(history[0]), parseInt(history[1]), parseInt(history[0])]);
+            break;
+          }
+
           history.push(displayNumber, '*');
 
           if (history.length > 3) {
-            quickSolve(history);
+            updateOutputView(quickSolve(history));
           }
 
           displayNumber = '';
           break;
 
         case '_':
+          if (displayNumber[0] == '-') {
+            displayNumber = displayNumber.slice(1);
+
+            updateOutputView(displayNumber);
+            break;
+          }
+
           displayNumber = `-${displayNumber}`;
           updateOutputView(displayNumber);
           break;
 
         case '%':
           history.push(displayNumber, '%');
-          console.log(history);
           let percent = quickSolve(history);
-          // console.log(percent);
+          percent = percent / 100;
+          updateOutputView(percent);
           break;
 
         case '=':
+          // If an operator was pressed before = then preform the operation
+          // of the value on the first value. i.e 6+=(12)
+          if (displayNumber == '') {
+            let value = history[0];
+            lastOperator = history[history.length-1];
+
+            let result = calculator.solve(
+                [history[0], lastOperator, history[0]]);
+            updateOutputView(result);
+            break;
+          }
           history.push(displayNumber);
-          calculator.solve(history);
+          let result = calculator.solve(history);
+          displayNumber = result;
+          updateOutputView(result);
           break;
       }
     }
@@ -120,46 +167,45 @@
       let arrayEquation = array.slice();
 
       if ((arrayEquation[arrayEquation.length-1] == '')) {
-        arrayEquation.pop();
+
+        let operator = arrayEquation[arrayEquation.length-2];
+        console.log(operator);
+
+        // return result;
       }
 
       // Set the starting number
-      let result = arrayEquation[0];
+      currentNumber = arrayEquation[0];
 
       // Remove the starting number and group the equations
-      if (arrayEquation.length < 2) {
-        console.log(arrayEquation)
-      }
-
-        arrayEquation.shift();
+      arrayEquation.shift();
 
       // Seperate the equations into pairs, one function one value
       const equations = createGroupedEquations(arrayEquation, 2);
 
-
       // Iterate over each group of [function, value]s, determining the
-      // function and applying the provided value to the result
+      // function and applying the provided value to the currentNumber
       for (let i = 0; i < equations.length; i++) {
         switch (equations[i][0]){
           case '+':
-            result = add(result, equations[i][1]);
+            currentNumber = add(currentNumber, equations[i][1]);
             break;
 
           case '-':
-            result = subtract(result, equations[i][1]);
+            currentNumber = subtract(currentNumber, equations[i][1]);
             break;
 
           case '/':
-            result = divide(result, equations[i][1]);
+            currentNumber = divide(currentNumber, equations[i][1]);
             break;
 
           case '*':
-            result = multiply(result, equations[i][1]);
+            currentNumber = multiply(currentNumber, equations[i][1]);
             break;
         }
       }
-      updateOutputView(result);
       displayNumber = '';
+      return currentNumber;
     }
   };
 
@@ -173,6 +219,7 @@
       solved = calculator.solve(historyArray);
     }
       solved = calculator.solve(historyArray);
+      return solved;
   }
 
   function updateOutputView(string) {

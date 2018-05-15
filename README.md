@@ -174,26 +174,26 @@ The Back End, well kinda.
 
 Calculator functionality and behavior is consistent with [Mac calculator rules](#calculator-rules-and-examples):
 * pressing `AC` displays `0`
-- pressing `AC` `8` `+/-` displays `-8`
-- pressing `AC` `-5` `+/-` displays `5`
-- pressing `AC` `99` `%` displays `0.99`
+* pressing `AC` `8` `+/-` displays `-8`
+* pressing `AC` `-5` `+/-` displays `5`
+* pressing `AC` `99` `%` displays `0.99`
 * pressing `AC` `9` `+` `9` `-` `3` `=` displays `15`
-- pressing `AC` `6` `+` `=` displays `12`
+* pressing `AC` `6` `+` `=` displays `12`
 * pressing `AC` `4` `x` `4` `=` displays `16`
-- pressing `AC` `64` `+` `=` displays `128`
-- pressing `AC` `9` `+` displays `9`
-- pressing `AC` `8` `-` `5` `-` displays `3`
-- pressing `AC` `9` `-` `5` `+` displays `4`
-- pressing `AC` `9` `+` `9` `+` `+` `+` displays `18`
-- pressing `AC` `5` `+` `3` `x` `6` `+` displays `23`
-- pressing `AC` `9` `x` displays `9`
-- pressing `AC` `3` `x` `5` `x` displays `15`
+* pressing `AC` `64` `+` `=` displays `128`
+* pressing `AC` `9` `+` displays `9`
+* pressing `AC` `8` `-` `5` `-` displays `3`
+* pressing `AC` `9` `-` `5` `+` displays `4`
+* pressing `AC` `9` `+` `9` `+` `+` `+` displays `18`
+- pressing `AC` `5` `+` `3` `x` `6` `+` displays `23`  //order of operations
+* pressing `AC` `9` `x` displays `9`
+* pressing `AC` `3` `x` `5` `x` displays `15`
 * pressing `AC` `6` `/` `3` displays `2`
-- pressing `AC` `3` `x` `4` `x` `x` `x` displays `12`
-- pressing `AC` `4` `+` `3` `x` `6` `x` displays `18`
-- pressing `AC` `3` `+` `5` `x` displays `5`
-- pressing `AC` `3` `+` `5` `x` `6` `x` displays `30`
-- pressing `AC` `3` `+` `5` `x` `6` `x` `2` `+` displays `63`
+* pressing `AC` `3` `x` `4` `x` `x` `x` displays `12`
+* pressing `AC` `4` `+` `3` `x` `6` `x` displays `18`
+* pressing `AC` `3` `+` `5` `x` displays `8`
+- pressing `AC` `3` `+` `5` `x` `6` `x` displays `30`  //order of operations
+- pressing `AC` `3` `+` `5` `x` `6` `x` `2` `+` displays `63` //order of operations
 
 ###Plan
 Look up
