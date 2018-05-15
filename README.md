@@ -163,14 +163,14 @@ The Back End, well kinda.
 - NOT store or read state from the DOM
 
 ### Sepcs
-- Your `JavaScript` is written in `ES5`
+* Your `JavaScript` is written in `ES5`
 - Your `JavaScript` follows this [style guide](https://google.github.io/styleguide/jsguide.html)
-- Your JavaScript defines 1 or less global variables
-- Typing a relevant key at any point is reflected on the calculator
-- Typing a relevant key causes the corresponding button on the calculator to appear to have been pressed. AKA flashes active
-- The state of the calculator is not be stored in the `DOM`
-- The mathematical operations for your calculator are each their own function, and are defined outside of any DOM event handler
-- When the length of the number displayed exceeds the width available, the font-size deterministically drops
+* Your JavaScript defines 1 or less global variables
+* Typing a relevant key at any point is reflected on the calculator
+* Typing a relevant key causes the corresponding button on the calculator to appear to have been pressed. AKA flashes active
+* The state of the calculator is not be stored in the `DOM`
+* The mathematical operations for your calculator are each their own function, and are defined outside of any DOM event handler
+* When the length of the number displayed exceeds the width available, the font-size deterministically drops
 
 Calculator functionality and behavior is consistent with [Mac calculator rules](#calculator-rules-and-examples):
 * pressing `AC` displays `0`
@@ -346,7 +346,7 @@ function optionalDestructuring([a = 4, b = 2] = []) { … };
   - Do not use the `Object` constructor
   - Do not mix quoted and unquoted keys. They are slightly different so don't mix them in the same object.
   - You can use computed keys (property names). They are treated as quoted keys.
-  - You can use the `method` shorthand instead of a color and function or arrow function. This will also all `this` to refer to the literal itself rather than the scrop outside the object literal that an arrow function would give you
+  - You can use the `method` shorthand instead of a colon and function or arrow function. This will also all `this` to refer to the literal itself rather than the scrop outside the object literal that an arrow function would give you
 ```javascript
 return {
   stuff: 'candy',
