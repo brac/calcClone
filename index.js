@@ -52,7 +52,7 @@
   });
 
   /**
-  * calculatorInput take the last key pressed. If it is a number then
+  * calculatorInput records the last key pressed. If it is a number then
   * The key is added to displayNumber and the display is updated.
   * Else if it is one of the operators then the key is normalized to
   * match the HTML ids and fed through a swtich statment.
@@ -183,8 +183,8 @@
     * @method addInput Add the current display number to the provided history
     *    array as well as the operator. Resets the display number to allow
     *    for further input
-    * @param {array, string} history, operator These are the state and the
-    *    operator that is associated with the value
+    * @param {array} history The state of the calculator
+    * @param {string} operator Operator that is associated with the value
     */
     addInput: function (history, operator) {
      history.push(parseInt(displayNumber), operator);
@@ -199,6 +199,7 @@
     * @method solve Solves the provided array
     * @param array {array} The history statck, presumed to be a series of
     *    integers and operators, alternating
+    * @returns {number}
     */
     solve: function(array) {
       /* Preserve the original array */
@@ -252,6 +253,7 @@
   *    as the user is inputing the next operator and value pair
   * @param history {array} The history of user input, in alternating value
   *    operator sequence
+  * @returns {number}
   */
   function quickSolve(history) {
     let historyArray = history.slice();
@@ -272,7 +274,7 @@
   *
   * @function updateOutputview Updates the output view with the result of a
   *  computation
-  * @param number {integer} The number to appear on the output view
+  * @param number {number} The number to appear on the output view
   */
   function updateOutputView(number) {
     if (fontSize == '') {
@@ -292,7 +294,7 @@
 
   /**
   * @function keyFlash Flashes the key pressed form the keyboard
-  * @param key {integer} The coorosponding key to HTML element
+  * @param key {number} The coorosponding key to HTML element
   */
   function keyFlash(key) {
     const el = document.querySelector(`[id='${key}']`);
@@ -307,6 +309,7 @@
 
   /**
   * @function add the Add function
+  * @returns number
   */
   function add(num1, num2) {
     let result = num1 + num2;
@@ -315,6 +318,7 @@
 
   /**
   * @function subtract the Subtract function
+  * @returns number
   */
   function subtract(num1, num2) {
    let result = num1 - num2;
@@ -323,6 +327,7 @@
 
   /**
   * @function divide the Divide function
+  * @returns {number}
   */
   function divide(num1, num2) {
     let result = num1 / num2;
@@ -331,6 +336,7 @@
 
   /**
   * @function multiply the Multiply function
+  * @returns {number}
   */
   function multiply(num1, num2) {
     let result = num1 * num2;
@@ -339,9 +345,11 @@
 
   /**
   * @function createGroupedEquations A helper function to seperate
-  *    the history into value-operator pairs for easy computation
-  * @param (array, chunkSize) {array, integer} The original history array
-  *     and the intended size of the groups. This will always be 2
+  *     the history into value-operator pairs for easy computation
+  * @param (array) {array} The original history array
+  * @param (chunkSize) {number} The intended size of the groups. This
+  *     will always be 2
+  * @returns {array}
   */
   function createGroupedEquations(array, chunkSize) {
     let groups = [];
