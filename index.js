@@ -15,6 +15,34 @@
   * history will be the overall state of the equation entered
   */
 
+
+  const Calculator = function (element) {
+    let displayNumber = 0;
+
+    // element.addEventListener('click', function(event){
+      // if (element.classList.contains('unfocused')) {
+        // element.classList.remove('unfocused');
+      // } else {
+        // console.log('this is focused');
+      // }
+    // });
+
+
+    const keypad = element.querySelector('.calculator-keypad');
+    const outputTextEl = element.querySelector('.calculator-outputview-output');
+
+    const calcInput = function(key){
+      console.log(`I will do a thing with ${key}`);
+    };
+
+    keypad.addEventListener('click', function(event) {
+      calcInput(event.target.textContent);
+    });
+
+    return element;
+  };
+
+  // TODO: Remove these variables through functional composition
   let keypad = '';
   let outputTextEl = '';
   let fontSize = '';
@@ -27,6 +55,28 @@
   * @fires addEventListener
   */
   document.addEventListener('DOMContentLoaded', function() {
+    // Select the calculators
+    const calculatorElements = document.querySelector('.pagewrap').children;
+    const calculator1 = new Calculator(calculatorElements[0]);
+    const calculator2 = new Calculator(calculatorElements[1]);
+
+    calculator1.addEventListener('click', function(event) {
+      if (calculator1.classList.contains('unfocused')) {
+        calculator1.classList.remove('unfocused');
+        calculator2.classList.add('unfocused');
+      }
+    });
+
+    calculator2.addEventListener('click', function(event) {
+      if (calculator2.classList.contains('unfocused')) {
+        calculator2.classList.remove('unfocused');
+        calculator1.classList.add('unfocused');
+      }
+    });
+
+
+
+
     keypad = document.querySelector('.calculator-keypad');
     outputTextEl = document.querySelector('.calculator-outputview-output');
 
@@ -60,6 +110,9 @@
   * @function calculatorInput
   * @param {string} key The last key clicked or pressed for user input
   */
+
+
+
   function calculatorInput(key) {
     if (/[0-9]|\./.test(key)) {
       keyFlash(key);
@@ -77,7 +130,7 @@
       keyFlash(key);
       switch (key) {
         case 'c':
-          calculator.clear();
+          helpers.clear();
           break;
 
         case '+':
@@ -86,7 +139,7 @@
           }
 
           /** Add the current value of dispalyNumber and + to the history */
-          calculator.addInput(history, '+');
+          helpers.addInput(history, '+');
           break;
 
         case '-':
@@ -95,7 +148,7 @@
           }
 
           /** Add the current value of dispalyNumber and - to the history */
-          calculator.addInput(history, '-');
+          helpers.addInput(history, '-');
           break;
 
         case '÷':
@@ -104,7 +157,7 @@
           }
 
           /** Add the current value of dispalyNumber and / to the history */
-          calculator.addInput(history, '/');
+          helpers.addInput(history, '/');
           break;
 
         case '×':
@@ -113,7 +166,7 @@
           }
 
           /** Add the current value of dispalyNumber and * to the history */
-          calculator.addInput(history, '*');
+          helpers.addInput(history, '*');
           break;
 
         /** Toggle a negative symbol on the displayNumber */
@@ -146,7 +199,7 @@
             let value = history[0];
             lastOperator = history[history.length-1];
 
-            let result = calculator.solve(
+            let result = helpers.solve(
                 [history[0], lastOperator, history[0]]);
             updateOutputView(result);
             break;
@@ -156,7 +209,7 @@
           * state and update output view
           */
           history.push(parseInt(displayNumber));
-          let result = calculator.solve(history);
+          let result = helpers.solve(history);
           displayNumber = result;
           updateOutputView(result);
           break;
@@ -165,9 +218,9 @@
   }
 
   /**
-  * Calculator object that holds various helper methods.
+  * helpers object that holds various helper methods.
   */
-  const calculator = {
+  const helpers = {
     /**
     * Clears the history and resets the view to 0
     *
@@ -183,7 +236,7 @@
     * @method addInput Add the current display number to the provided history
     *    array as well as the operator. Resets the display number to allow
     *    for further input
-    * @param {array} history The state of the calculator
+    * @param {array} history The state of the calc
     * @param {string} operator Operator that is associated with the value
     */
     addInput: function (history, operator) {
@@ -264,9 +317,9 @@
     */
     if (history.length >= 3) {
       historyArray.pop();
-      solved = calculator.solve(historyArray);
+      solved = helpers.solve(historyArray);
     }
-      solved = calculator.solve(historyArray);
+      solved = helpers.solve(historyArray);
       return solved;
   }
 
@@ -357,7 +410,6 @@
     for (let i =0; i < array.length; i += chunkSize) {
       groups.push(array.slice(i, i + chunkSize));
     }
-
     return groups;
   }
 })();
