@@ -18,21 +18,33 @@
 
   const Calculator = function (element) {
     let displayNumber = 0;
-
-    // element.addEventListener('click', function(event){
-      // if (element.classList.contains('unfocused')) {
-        // element.classList.remove('unfocused');
-      // } else {
-        // console.log('this is focused');
-      // }
-    // });
-
+    let stack = [];
+    let fontSize = 3;
 
     const keypad = element.querySelector('.calculator-keypad');
     const outputTextEl = element.querySelector('.calculator-outputview-output');
 
+
     const calcInput = function(key){
       console.log(`I will do a thing with ${key}`);
+    };
+
+    const clear = function(key){
+      displayNumber = '';
+      updateOutput(0);
+      stack = [];
+    };
+
+    const addDisplayInput = function(stack, operator) {
+      stack.push(parseInt(displayNumber), operator);
+    };
+
+    const solve = function(stack) {
+      console.log(`I will solve this ${stack}`);
+    };
+
+    const updateOutputView = function(number){
+
     };
 
     keypad.addEventListener('click', function(event) {
