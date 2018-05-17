@@ -171,6 +171,6 @@
       background-color: #7B7B7B;
     }
 
-
-
-
+.focused {
+  opacity: 0.5;
+}
