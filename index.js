@@ -1,13 +1,13 @@
 /**
  * @fileoverview A simple calculator clone using Javascript
  * and HTML. This calculator was an exercise and does not adhere
- * to proper order of operatrions. It also has numerous
+ * to proper order of operations. It also has numerous
  * bugs when enter some combinations of repetitive operators.
  */
 
 (function() {
   /**
-  * High level variables to be used by the calulator:
+  * High level variables to be used by the calculator:
   * keypad will be buttons which the user will click or press
   * outputTextEl will be the display window which will update
   * fontSize will be the size of the font in the display window
@@ -41,7 +41,7 @@
     });
 
     /**
-    * Listen for keypress
+    * Listen for key press
     *
     * @event addEventListener
     * @type {object}
@@ -55,7 +55,7 @@
   * calculatorInput records the last key pressed. If it is a number then
   * The key is added to displayNumber and the display is updated.
   * Else if it is one of the operators then the key is normalized to
-  * match the HTML ids and fed through a swtich statment.
+  * match the HTML ids and fed through a switch statement.
   *
   * @function calculatorInput
   * @param {string} key The last key clicked or pressed for user input
@@ -197,7 +197,7 @@
 
     /**
     * @method solve Solves the provided array
-    * @param array {array} The history statck, presumed to be a series of
+    * @param array {array} The history stack, presumed to be a series of
     *    integers and operators, alternating
     * @returns {number}
     */
@@ -216,7 +216,7 @@
       /* Remove the starting number */
       arrayEquation.shift();
 
-      /* Seperate the equations into pairs, [operator value] */
+      /* Separate the equations into pairs, [operator value] */
       const equations = createGroupedEquations(arrayEquation, 2);
 
       /**
@@ -249,7 +249,7 @@
 
   /**
   *
-  * @function quickSolve Solves the history and updates the outputview
+  * @function quickSolve Solves the history and updates the output view
   *    as the user is inputing the next operator and value pair
   * @param history {array} The history of user input, in alternating value
   *    operator sequence
@@ -294,7 +294,7 @@
 
   /**
   * @function keyFlash Flashes the key pressed form the keyboard
-  * @param key {number} The coorosponding key to HTML element
+  * @param key {number} The corresponding key to HTML element
   */
   function keyFlash(key) {
     const el = document.querySelector(`[id='${key}']`);
@@ -344,7 +344,7 @@
   }
 
   /**
-  * @function createGroupedEquations A helper function to seperate
+  * @function createGroupedEquations A helper function to separate
   *     the history into value-operator pairs for easy computation
   * @param (array) {array} The original history array
   * @param (chunkSize) {number} The intended size of the groups. This

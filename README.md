@@ -244,7 +244,7 @@ In stage 3 you are going to add a second calculator to the page. Both calculator
 
 ### In this stage you will be using at least the following skills:
 
-- Event delegation
+* Event delegation
 - JavaScript Constructors
 - Componentization
 - Composition
@@ -268,16 +268,152 @@ In stage 3 you are going to add a second calculator to the page. Both calculator
 
 ### The Plan
 - Look Up
-  - Componentization
-  - Composition
-  - Javascript Focus element
+  * Componentization
+  * Composition
+  * Javascript Focus element
 
-- Build
-  - HTML duplication
-  - Calculator constructor
-  - On Focus
-  - Accept Any Input
-  - Accept Independent Input
+  - Build
+    - HTML duplication
+    - Calculator constructor
+    - On Focus
+    - Accept Any Input
+    - Accept Independent Input
+
+  - Adjust
+    - Remove external variable, implement pure functions
+
+
+### Notes
+- Componentization
+  The goal of web components is to reduce complexity by isolating a related group of HTML, CSS, and JavaScript to perform a common function within the context of a single page. [Source](https://blogs.windows.com/msedgedev/2015/07/14/bringing-componentization-to-the-web-an-overview-of-web-components/)
+
+
+  Taking modules and making them seperate, movable things that can be accessed via a browser. Often this may include a function that returns a block of HTML markup through a string literal.
+
+  For example a page displaying various cards. The cards are generated from a function that returns the markup for each card, and that function get's it's data from a database or somethhing.
+
+- Composition
+  Functional composition centers around pure functions. Remeber these will always return the same output given the same input. [Source](http://blog.ricardofilipe.com/post/javascript-composition-for-dummies)
+
+  For example
+```javascript
+var total = 0;
+
+for (var i = 0; i < expenses.length; i++) {
+total += expenses[i].price;
+}
+
+console.log(total); // 620.99
+```
+  This is a way to get all the data from one property of a group of objects, but it's not functional. It also relies on external variables that we have no way to determining the state on. You'll need to change these same things in your own calculator
+
+  Instead, we use methods like `.map` and `.reduce`
+```javascript
+const sumAll = (arr) => arr
+.map((item) => item.price)
+.reduce((acc, price) => acc + price, 0);
+
+let total = sumAll(expenses); // 620.99
+```
+  Now this is a better example of functional composition. Note that at the end we are adding the number of each price to `acc` which has an initial value of 0. Tricky tricky....
+
+  Another example
+```javascript
+var getHousehold = (src) => {
+  return src.filter((item) => {
+    return item.type === 'Household';
+  });
+};
+```
+  Can be better written like:
+```javascript
+const getHousehold = (src) =>
+  src.filter((item) => item.type === 'Household');
+```
+  Now we have a function that will compute the total and another function that will build an array of numbers. So we can put those together like this:
+```javascript
+let householdExpenses = sumAll(getHousehold(expenses)); // 600
+```
+
+  We can compose these together. I'm unsure if you need to write you own compose function, but what it would do is take multiple functions, and then return a function that is of both auguments applied. Like this:
+```javascript
+var compose = function(f, g) {
+  return function(x) {
+    return g(f(x));
+  }
+};
+```
+  Continuing with the expense example you could wrtie this:
+```javascript
+const sumOfHousehold = compose(getHousehold, sumAll);
+console.log(sumHouseholdExpenses);
+```
+  Compose may be a special keyword, try it out. You may also be able to use composing to get the ordre of operatinos working. Compose is also similar to `pipe`, but in reverse.
+
+  You can only compose functions that are pure functions, or you should. [Source](https://medium.com/@chetcorcos/functional-programming-for-javascript-people-1915d8775504)
+
+  Here is an example of functional composition:
+```javascript
+const formalGreeting = (name) => `Hello ${name}`
+const casualGreeting = (name) => `Sup ${name}`
+const male = (name) => `Mr. ${name}`
+const female = (name) => `Mrs. ${name}`
+const doctor = (name) => `Dr. ${name}`
+const phd = (name) => `${name} PhD`
+const md = (name) => `${name} M.D.`
+formalGreeting(male(phd("Chet"))) // => "Hello Mr. Chet PhD"
+```
+  Note how we are continually returning an increasingly long string that will make up our total greeting. This is good but you could handle all the cases with a `pipe`. This is more of a theory than a keyword and works b/c functions in JS are first class, meaning that they can be passed as arguments to other functions and returned.
+
+  A pipe is a function that will return a function which will pipe through the data of 2 or more functions. Like chaining results with promises, but with function calls. [Source](https://vanslaars.io/post/create-pipe-function/)
+
+  More on [Functional Composition](https://hackernoon.com/javascript-functional-composition-for-every-day-use-22421ef65a10)
+
+
+
+
+- More notes on Functional Composition
+  Function composition is the process of combining two or more functions to produce a new function. Composing functions together is like snapping together a series of pipes for our data to flow through.
+
+  Put simply, a composition of functions `f` and `g` can be defined as `f(g(x))`, which evaluates from the inside out — right to left. In other words, the evaluation order is: x, g then f. [Source](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0)
+
+  You've been doing this somewhat but should strive to do more. For example:
+```javascript
+const toSlug = input => encodeURIComponent(
+input.split(' ')
+.map(str => str.toLowerCase())
+.join('-')
+);
+```
+  The above could be flattened to this
+```javascript
+const toSlug = pipe(
+split(' '),
+map(toLowerCase),
+join('-'),
+encodeURIComponent
+);
+```
+
+- Object Composition
+  This is different than functional composition, and object compisition an alternative to classical inhertiance. Classical inheritance is the process of adding methods to prototypes of constructors and using the `new` and `this` keyword.
+
+  Object composition does not use these but rather uses `return Object.assign(state, canCast(state))` (for example) to return a new object from essentially a constructor function. [Source](https://medium.com/code-monkey/object-composition-in-javascript-2f9b9077b5e6)
+
+  'Favor object composition over class inheritance.' ~ Gang of Four, “Design Patterns”.
+
+  Three methods of object composition
+
+  * Aggreation
+    When an object is formed from an enumerable collection of subobjects. In other words, an object which contains other objects. Each subobject retains its own reference identity, such that it could be destructured from the aggregation without information loss.
+
+  * Concatenation
+    When an object is formed by adding new properties to an existing object. Properties can be concatenated one at a time or copied from existing objects, e.g., jQuery plugins are created by concatenating new methods to the jQuery delegate prototype, jQuery.fn.
+
+  * Delegation
+    When an object forwards or delegates to another object. e.g., Ivan Sutherland’s Sketchpad (1962) included instances with references to “masters” which were delegated to for shared properties. Photoshop includes “smart objects” that serve as local proxies which delegate to an external resource. JavaScript’s prototypes are also delegates: Array instances forward built-in array method calls to Array.prototype, objects to Object.prototype, etc...
+
+
 
 
 
