@@ -287,7 +287,6 @@ In stage 3 you are going to add a second calculator to the page. Both calculator
 - Componentization
   The goal of web components is to reduce complexity by isolating a related group of HTML, CSS, and JavaScript to perform a common function within the context of a single page. [Source](https://blogs.windows.com/msedgedev/2015/07/14/bringing-componentization-to-the-web-an-overview-of-web-components/)
 
-
   Taking modules and making them seperate, movable things that can be accessed via a browser. Often this may include a function that returns a block of HTML markup through a string literal.
 
   For example a page displaying various cards. The cards are generated from a function that returns the markup for each card, and that function get's it's data from a database or somethhing.
@@ -368,8 +367,6 @@ formalGreeting(male(phd("Chet"))) // => "Hello Mr. Chet PhD"
   A pipe is a function that will return a function which will pipe through the data of 2 or more functions. Like chaining results with promises, but with function calls. [Source](https://vanslaars.io/post/create-pipe-function/)
 
   More on [Functional Composition](https://hackernoon.com/javascript-functional-composition-for-every-day-use-22421ef65a10)
-
-
 
 
 - More notes on Functional Composition

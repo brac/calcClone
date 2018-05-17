@@ -4,17 +4,17 @@
   font-family: 'Roboto';
 }
 
+.pagewrap{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .calculator {
-  bottom: 0;
   border-radius: 5px;
   box-shadow: 10px 10px 100px grey;
-  height: 320px;
-  left: 0;
-  margin: auto;
-  position: absolute;
-  right: 0;
-  top:0;
-  width: 234px;
+  flex: 0 0 234px;
+  margin: 4em auto auto auto;
 }
 
 .calculator-outputview {
