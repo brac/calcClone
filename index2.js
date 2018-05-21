@@ -11,7 +11,7 @@
     const outputTextEl = element.querySelector('.calculator-outputview-output');
 
     this.keyFlash = function(key){
-      console.log(key);
+      // console.log(key);
       const el = element.querySelector(`[id='${key}']`);
       el.classList.add(
         'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
@@ -41,12 +41,13 @@
     };
 
     this.addInput = function(stack, operator) {
-     stack.push(parseInt(this.displayNumber), operator);
+      // console.log(stack)
+      stack.push(parseInt(displayNumber), operator);
 
-     if (stack.length > 3) {
-       this.updateOutputView(this.quickSolve(stack));
-     }
-     displayNumber = '';
+      if (stack.length > 3) {
+        this.updateOutputView(this.quickSolve(stack));
+      }
+      displayNumber = '';
     };
 
     const createGroupedEquations = function(array, chunkSize){
@@ -58,9 +59,10 @@
       return groups;
     };
 
-    const add = function(num1, num2) {
+    this.add = function(num1, num2) {
+      // console.log(num1, num2)
       let result = num1 + num2;
-      console.log(result);
+      // console.log(result);
       return result;
     }
 
@@ -83,7 +85,7 @@
       if (/[0-9]|\./.test(key)) {
         this.keyFlash(key);
         displayNumber += key;
-        this.updateOutputView(displayNumber);
+        this.updateOutputView(parseInt(displayNumber));
       } else if (/\/|\*|-|\+|Enter|AC|c|=|\.|_|%|÷|×/.test(key)) {
         if (key == 'AC')  key = 'c';
         if (key == 'Enter') key = '=';
@@ -184,6 +186,7 @@
 
     this.solve = function(array) {
       /* Preserve the original array */
+      // console.log(array)
       let arrayEquation = array.slice();
 
       /* If the last key pressed was an operator, identify that operator */
@@ -207,19 +210,19 @@
       for (let i = 0; i < equations.length; i++) {
         switch (equations[i][0]) {
           case '+':
-            currentNumber = add(currentNumber, equations[i][1]);
+            currentNumber = this.add(currentNumber, equations[i][1]);
             break;
 
           case '-':
-            currentNumber = subtract(currentNumber, equations[i][1]);
+            currentNumber = this.subtract(currentNumber, equations[i][1]);
             break;
 
           case '/':
-            currentNumber = divide(currentNumber, equations[i][1]);
+            currentNumber = this.divide(currentNumber, equations[i][1]);
             break;
 
           case '*':
-            currentNumber = multiply(currentNumber, equations[i][1]);
+            currentNumber = this.multiply(currentNumber, equations[i][1]);
             break;
         }
       }
