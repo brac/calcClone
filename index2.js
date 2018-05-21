@@ -1,3 +1,6 @@
+// TODO: Update display
+// TODO: Preform Computations
+
 (function() {
 
   const Calculator = function (element) {
@@ -9,7 +12,19 @@
     this.keypad = element.querySelector('.calculator-keypad');
     const outputTextEl = element.querySelector('.calculator-outputview-output');
 
+    this.keyFlash = function(key){
+      const el = element.querySelector(`[id='${key}']`);
+      el.classList.add(
+        'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
+
+      setTimeout(function() {
+        el.classList.remove(
+          'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
+      }, 100);
+    };
+
     this.input = function(key){
+      this.keyFlash(key);
       console.log(`I will do a thing with ${key}`);
     };
 
@@ -30,16 +45,7 @@
     this.updateOutputView = function(number){
 
     };
-
-    // TODO: Get clicks working
-    // TODO: Update display
-    // TODO: Preform Computations
-    /*keypad.addEventListener('click', function(event) {
-      this.input(event.target.textContent);
-    });*/
   };
-
-
 
   document.addEventListener('DOMContentLoaded', function() {
     // Select the calculators
@@ -70,11 +76,13 @@
     });
 
     // Send any keypad clicks to the calculator inputs
-    for (let calc of calculators) {
-      calc.keypad.addEventListener('click', function(event) {  //Why u mad jshint?
-        calc.input(event.target.textContent);
-      });
-    }
+    calculator1.keypad.addEventListener('click', function(event) {
+      calculator1.input(event.target.textContent);
+    });
+
+    calculator2.keypad.addEventListener('click', function(event) {
+      calculator2.input(event.target.textContent);
+    });
 
     // Send any key presses to the active calc
     document.addEventListener('keypress', function(event){
