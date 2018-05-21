@@ -416,7 +416,7 @@
   *     will always be 2
   * @returns {array}
   */
-  function createGroupedEquations(array, chunkSize) {
+  function createGroupedEfquations(array, chunkSize) {
     let groups = [];
 
     for (let i =0; i < array.length; i += chunkSize) {
