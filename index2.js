@@ -6,46 +6,47 @@
     let stack = [];
     let fontSize = 3;
 
-    const keypad = element.querySelector('.calculator-keypad');
+    this.keypad = element.querySelector('.calculator-keypad');
     const outputTextEl = element.querySelector('.calculator-outputview-output');
-
 
     this.input = function(key){
       console.log(`I will do a thing with ${key}`);
     };
 
-    const clear = function(key){
+    this.clear = function(key){
       displayNumber = '';
       updateOutput(0);
       stack = [];
     };
 
-    const addDisplayInput = function(stack, operator) {
+    this.addDisplayInput = function(stack, operator) {
       stack.push(parseInt(displayNumber), operator);
     };
 
-    const solve = function(stack) {
+    this.solve = function(stack) {
       console.log(`I will solve this ${stack}`);
     };
 
-    const updateOutputView = function(number){
+    this.updateOutputView = function(number){
 
     };
 
     // TODO: Get clicks working
     // TODO: Update display
     // TODO: Preform Computations
-
-    // keypad.addEventListener('click', function(event) {
-    //   input(event.target.textContent);
-    // });
+    /*keypad.addEventListener('click', function(event) {
+      this.input(event.target.textContent);
+    });*/
   };
+
+
 
   document.addEventListener('DOMContentLoaded', function() {
     // Select the calculators
     const calculatorElements = document.querySelector('.pagewrap').children;
     const calculator1 = new Calculator(calculatorElements[0]);
     const calculator2 = new Calculator(calculatorElements[1]);
+    const calculators = [calculator1, calculator2];
     let focusedCalculator = calculator1;
 
     // Focus the element if it is not already focused
@@ -67,6 +68,13 @@
         focusedCalculator = calculator2;
       }
     });
+
+    // Send any keypad clicks to the calculator inputs
+    for (let calc of calculators) {
+      calc.keypad.addEventListener('click', function(event) {  //Why u mad jshint?
+        calc.input(event.target.textContent);
+      });
+    }
 
     // Send any key presses to the active calc
     document.addEventListener('keypress', function(event){
