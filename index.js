@@ -1,7 +1,7 @@
 /**
 * @module calcClone
 * @fileoverview A Mac Calculator clone. This exercise does not adhere
-*      to order or operations and it will return NaN
+*      to order of operations and it will return NaN
 *      if input does not alternate between a number and operator.
 *      Query, how do I get those methods to not be documented as Global?
 */
@@ -26,7 +26,7 @@
     /**
     * Flash the coorosponding key on the keypad that was pressed
     * @method keyFlash
-    * @param {string} key - The key identifer that was pressed
+    * @param {string} key - The key identifier that was pressed
     */
     this.keyFlash = function(key){
       const el = element.querySelector(`[id='${key}']`);
@@ -170,7 +170,7 @@
     *     the output view.
     * @method input
     * @param {(number|string)} key - The provided key is tested for a
-    *     cooropsonding character. If it is a number then the displayNumber
+    *     corresponding character. If it is a number then the displayNumber
     *     and the output view are updated. If the key is an operator then
     *     we will fire the appropriate method associated with provided operator
     */
@@ -273,7 +273,7 @@
     };
 
     /**
-    * Method for sovling the state of the calculator
+    * Method for solving the state of the calculator
     * @method solve
     * @param {array} array - The state of the calculator
     */
