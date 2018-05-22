@@ -60,9 +60,22 @@
     };
 
     this.add = function(num1, num2) {
-      // console.log(num1, num2)
       let result = num1 + num2;
-      // console.log(result);
+      return result;
+    }
+
+    this.subtract = function(num1, num2) {
+      let result = num1 - num2;
+      return result;
+    }
+
+    this.multiply = function(num1, num2) {
+      let result = num1 * num2;
+      return result;
+    }
+
+    this.divide = function(num1, num2) {
+      let result = num1 / num2;
       return result;
     }
 
@@ -105,56 +118,52 @@
               break;
             }
 
-            /** Add the current value of dispalyNumber and + to the history */
             this.addInput(stack, '+');
             break;
 
-          // case '-':
-          //   if (displayNumber == '') {
-          //     break;
-          //   }
+          case '-':
+            if (displayNumber == '') {
+              break;
+            }
 
-          //   /** Add the current value of dispalyNumber and - to the history */
-          //   helpers.addInput(history, '-');
-          //   break;
+            this.addInput(stack, '-');
+            break;
 
-          // case '÷':
-          //   if (displayNumber == '') {
-          //     break;
-          //   }
+          case '÷':
+            if (displayNumber == '') {
+              break;
+            }
 
-          //   /** Add the current value of dispalyNumber and / to the history */
-          //   helpers.addInput(history, '/');
-          //   break;
+            this.addInput(stack, '/');
+            break;
 
-          // case '×':
-          //   if (displayNumber == '') {
-          //     break;
-          //   }
+          case '×':
+            if (displayNumber == '') {
+              break;
+            }
 
-          //   /** Add the current value of dispalyNumber and * to the history */
-          //   helpers.addInput(history, '*');
-          //   break;
+            this.addInput(stack, '*');
+            break;
 
-          // /** Toggle a negative symbol on the displayNumber */
-          // case '_':
-          //   if (displayNumber[0] == '-') {
-          //     displayNumber = displayNumber.slice(1);
+          /** Toggle a negative symbol on the displayNumber */
+          case '_':
+            if (displayNumber[0] == '-') {
+              displayNumber = displayNumber.slice(1);
 
-          //     updateOutputView(displayNumber);
-          //     break;
-          //   }
+              this.updateOutputView(displayNumber);
+              break;
+            }
 
-          //   displayNumber = `-${displayNumber}`;
-          //   updateOutputView(displayNumber);
-          //   break;
+            displayNumber = `-${displayNumber}`;
+            this.updateOutputView(displayNumber);
+            break;
 
-          // /** Determin the % of the first value in the history */
+          // /** Determine the % of the first value in the stack */
           // case '%':
-          //   history.push(parseInt(displayNumber), '%');
-          //   let percent = quickSolve(history);
+          //   stack.push(parseInt(displayNumber), '%');
+          //   let percent = quickSolve(stack);
           //   percent = percent / 100;
-          //   updateOutputView(percent);
+          //   this.updateOutputView(percent);
           //   break;
 
           // case '=':
@@ -163,22 +172,22 @@
           //   * the operation of that value on itself. i.e 6+=(12)
           //   */
           //   if (displayNumber == '') {
-          //     let value = history[0];
-          //     lastOperator = history[history.length-1];
+          //     let value = stack[0];
+          //     lastOperator = stack[stack.length-1];
 
-          //     let result = helpers.solve(
-          //         [history[0], lastOperator, history[0]]);
-          //     updateOutputView(result);
+          //     let result = this.solve(
+          //         [stack[0], lastOperator, stack[0]]);
+          //     this.updateOutputView(result);
           //     break;
           //   }
           //   /**
-          //   * Add the current display number to this history and solve the
+          //   * Add the current display number to this stack and solve the
           //   * state and update output view
           //   */
-          //   history.push(parseInt(displayNumber));
-          //   let result = helpers.solve(history);
+          //   stack.push(parseInt(displayNumber));
+          //   let result = this.solve(stack);
           //   displayNumber = result;
-          //   updateOutputView(result);
+          //   this.updateOutputView(result);
           //   break;
         }
       }
