@@ -245,42 +245,42 @@ In stage 3 you are going to add a second calculator to the page. Both calculator
 ### In this stage you will be using at least the following skills:
 
 * Event delegation
-- JavaScript Constructors
-- Componentization
-- Composition
+* JavaScript Constructors
+* Componentization
+* Composition
 
 ### During this stage you should…
 
-- duplicate the HTML for the calculator
-- NOT try and render a calculator from `JavaScript`
-- NOT use `jQuery` or any other `JavaScript` libraries or frameworks
-- consider using a constructor called `Calculator`
-- NOT give each calculator a unique `id` or `classname`
+* duplicate the HTML for the calculator
+* NOT try and render a calculator from `JavaScript`
+* NOT use `jQuery` or any other `JavaScript` libraries or frameworks
+* consider using a constructor called `Calculator`
+* NOT give each calculator a unique `id` or `classname`
 
 ### You're done when…
 
-- Each calculator acts independently.
-- Clicking anywhere on a calculator focuses that calculator.
-- Typing a relevant key affects the focused calculator.
-- Use event delegation to avoid binding a `click` event listener to each button
-- The focused calculator is `opacity: 1`
-- The not-focused calculator is `opacity: 0.5`
+* Each calculator acts independently.
+* Clicking anywhere on a calculator focuses that calculator.
+* Typing a relevant key affects the focused calculator.
+* Use event delegation to avoid binding a `click` event listener to each button
+* The focused calculator is `opacity: 1`
+* The not-focused calculator is `opacity: 0.5`
 
 ### The Plan
-- Look Up
+* Look Up
   * Componentization
   * Composition
   * Javascript Focus element
 
-  - Build
-    - HTML duplication
-    - Calculator constructor
-    - On Focus
-    - Accept Any Input
-    - Accept Independent Input
+  * Build
+    * HTML duplication
+    * Calculator constructor
+    * On Focus
+    * Accept Any Input
+    * Accept Independent Input
 
-  - Adjust
-    - Remove external variable, implement pure functions
+  * Adjust
+    * Remove external variable, implement pure functions
 
 
 ### Notes

@@ -1,5 +1,3 @@
-// TODO: Preform Computations
-
 (function() {
   const Calculator = function (element) {
     this.element = element;
@@ -11,7 +9,6 @@
     const outputTextEl = element.querySelector('.calculator-outputview-output');
 
     this.keyFlash = function(key){
-      // console.log(key);
       const el = element.querySelector(`[id='${key}']`);
       el.classList.add(
         'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
@@ -41,7 +38,6 @@
     };
 
     this.addInput = function(stack, operator) {
-      // console.log(stack)
       stack.push(parseInt(displayNumber), operator);
 
       if (stack.length > 3) {
@@ -98,7 +94,7 @@
       if (/[0-9]|\./.test(key)) {
         this.keyFlash(key);
         displayNumber += key;
-        this.updateOutputView(parseInt(displayNumber));
+        this.updateOutputView(displayNumber);
       } else if (/\/|\*|-|\+|Enter|AC|c|=|\.|_|%|÷|×/.test(key)) {
         if (key == 'AC')  key = 'c';
         if (key == 'Enter') key = '=';
@@ -158,44 +154,42 @@
             this.updateOutputView(displayNumber);
             break;
 
-          // /** Determine the % of the first value in the stack */
-          // case '%':
-          //   stack.push(parseInt(displayNumber), '%');
-          //   let percent = quickSolve(stack);
-          //   percent = percent / 100;
-          //   this.updateOutputView(percent);
-          //   break;
+          /** Determine the % of the first value in the stack */
+          case '%':
+            stack.push(parseInt(displayNumber), '%');
+            let percent = this.quickSolve(stack);
+            percent = percent / 100;
+            this.updateOutputView(percent);
+            break;
 
-          // case '=':
-          //   /**
-          //   * If an operator was pressed before = then preform
-          //   * the operation of that value on itself. i.e 6+=(12)
-          //   */
-          //   if (displayNumber == '') {
-          //     let value = stack[0];
-          //     lastOperator = stack[stack.length-1];
+          case '=':
+            /**
+            * If an operator was pressed before = then preform
+            * the operation of that value on itself. i.e 6+=(12)
+            */
+            if (displayNumber == '') {
+              let value = stack[0];
+              const lastOperator = stack[stack.length-1];
 
-          //     let result = this.solve(
-          //         [stack[0], lastOperator, stack[0]]);
-          //     this.updateOutputView(result);
-          //     break;
-          //   }
-          //   /**
-          //   * Add the current display number to this stack and solve the
-          //   * state and update output view
-          //   */
-          //   stack.push(parseInt(displayNumber));
-          //   let result = this.solve(stack);
-          //   displayNumber = result;
-          //   this.updateOutputView(result);
-          //   break;
+              let result = this.solve(
+                  [stack[0], lastOperator, stack[0]]);
+              this.updateOutputView(result);
+              break;
+            }
+            /**
+            * Add the current display number to this stack, solve the
+            * state and update output view
+            */
+            stack.push(parseInt(displayNumber));
+            let result = this.solve(stack);
+            this.updateOutputView(result);
+            break;
         }
       }
     };
 
     this.solve = function(array) {
       /* Preserve the original array */
-      // console.log(array)
       let arrayEquation = array.slice();
 
       /* If the last key pressed was an operator, identify that operator */
