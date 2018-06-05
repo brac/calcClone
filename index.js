@@ -109,7 +109,7 @@
     this.add = function(num1, num2) {
       let result = num1 + num2;
       return result;
-    }
+    };
 
     /**
     * Simple subtraction method
@@ -120,7 +120,7 @@
     this.subtract = function(num1, num2) {
       let result = num1 - num2;
       return result;
-    }
+    };
 
     /**
     * Simple multiplication method
@@ -131,7 +131,7 @@
     this.multiply = function(num1, num2) {
       let result = num1 * num2;
       return result;
-    }
+    };
 
     /**
     * Simple division method
@@ -142,7 +142,7 @@
     this.divide = function(num1, num2) {
       let result = num1 / num2;
       return result;
-    }
+    };
 
     /**
     * Helper method to update the output view as the user continues to
@@ -166,7 +166,7 @@
     };
 
     /**
-    * Input parsing method to flashKeys, updated the displayNumber and
+    * Input parsing method to flashKeys, update the displayNumber and
     *     the output view.
     * @method input
     * @param {(number|string)} key - The provided key is tested for a
@@ -255,8 +255,8 @@
               let value = stack[0];
               const lastOperator = stack[stack.length-1];
 
-              let result = this.solve(
-                  [stack[0], lastOperator, stack[0]]);
+              let result = this.solve([stack[0], lastOperator, stack[0]]);
+              // let result = this.solve([stack[0], lastOperator, stack[0]]);
               this.updateOutputView(result);
               break;
             }
