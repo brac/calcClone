@@ -6,3 +6,16 @@ Accessing HTML elements
 
 KeyFlash
   - Clicking and keypress produce the same effect, a flash, worth optimizing?
+
+
+Things to do
+- move the functions into prototypes
+
+- remove all the duplicate IDs
+
+- class name that is a clickable button
+
+- document.activeElement for keypress and then not on the entire page
+
+- Change line 32 to select by class name not ID, multiple same IDs are an issue.
+
