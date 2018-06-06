@@ -9,9 +9,9 @@ KeyFlash
 
 
 Things to do
-- move the functions into prototypes
+* move the functions into prototypes
 
-- remove all the duplicate IDs
+* remove all the duplicate IDs
 
 - class name that is a clickable button
 

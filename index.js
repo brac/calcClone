@@ -198,7 +198,7 @@
   };
 
   Calculator.prototype.keyFlash = function(key)  {
-    const el = this.element.querySelector(`[id='${key}']`);
+    const el = this.element.getElementsByClassName(key)[0];
       el.classList.add(
         'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
 
