@@ -1,35 +1,204 @@
-/**
-* @module calcClone
-* @fileoverview A Mac Calculator clone. This exercise does not adhere
-*      to order of operations and it will return NaN
-*      if input does not alternate between a number and operator.
-*      Query, how do I get those methods to not be documented as Global?
-*/
-
 (function() {
-
-  /**
-  * Creates a new calculator
-  * @class
-  * @memberof module:calcClone
-  * @param {Object} element - The HTML element of a single calculator
-  */
   const Calculator = function (element) {
     this.element = element;
-    let displayNumber = '';
-    let stack = [];
-    let fontSize = 3;
-
+    this.displayNumber = '';
+    this.stack = [];
+    this.fontSize = 3;
     this.keypad = element.querySelector('.calculator-keypad');
-    const outputTextEl = element.querySelector('.calculator-outputview-output');
+    this.outputTextEl = element.querySelector('.calculator-outputview-output');
+  };
 
-    /**
-    * Flash the coorosponding key on the keypad that was pressed
-    * @method keyFlash
-    * @param {string} key - The key identifier that was pressed
-    */
-    this.keyFlash = function(key){
-      const el = element.querySelector(`[id='${key}']`);
+  Calculator.prototype.quickSolve = function() {
+    let historyArray = this.stack.slice();
+    let solved;
+
+    if (this.stack.length >= 3) {
+      historyArray.pop();
+    }
+      solved = this.solve(historyArray);
+      return solved;
+  };
+
+  Calculator.prototype.solve = function(array) {
+    let arrayEquation = array.slice();
+
+    if ((arrayEquation[arrayEquation.length-1] == '')) {
+      let operator = arrayEquation[arrayEquation.length-2];
+    }
+
+    let currentNumber = arrayEquation[0];
+    arrayEquation.shift();
+    const equations = this.createGroupedEquations(arrayEquation, 2);
+
+    for (let i = 0; i < equations.length; i++) {
+      switch (equations[i][0]) {
+        case '+':
+          currentNumber = this.add(currentNumber, equations[i][1]);
+          break;
+
+        case '-':
+          currentNumber = this.subtract(currentNumber, equations[i][1]);
+          break;
+
+        case '/':
+          currentNumber = this.divide(currentNumber, equations[i][1]);
+          break;
+
+        case '*':
+          currentNumber = this.multiply(currentNumber, equations[i][1]);
+          break;
+      }
+    }
+    this.displayNumber = '';
+    return currentNumber;
+  };
+
+  Calculator.prototype.add = function(num1, num2) {
+    let result = num1 + num2;
+    return result;
+  };
+
+  Calculator.prototype.subtract = function(num1, num2) {
+    let result = num1 - num2;
+    return result;
+  };
+
+  Calculator.prototype.multiply = function(num1, num2) {
+    let result = num1 * num2;
+    return result;
+  };
+
+  Calculator.prototype.divide = function(num1, num2) {
+    let result = num1 / num2;
+    return result;
+  };
+
+  Calculator.prototype.createGroupedEquations = function(array, chunkSize){
+    let groups = [];
+
+    for (let i =0; i < array.length; i += chunkSize) {
+      groups.push(array.slice(i, i + chunkSize));
+    }
+    return groups;
+  };
+
+  Calculator.prototype.clear = function(){
+    this.displayNumber = '';
+    this.updateOutputView(0);
+    this.stack = [];
+  };
+
+  Calculator.prototype.updateOutputView = function(number){
+    /** Decrease font size as number increases length during input*/
+    if (this.displayNumber.length > 8) {
+      if (this.fontSize > 0.5) {
+        this.fontSize -= 0.25;
+        this.fontSize = Math.round(this.fontSize * 100) / 100;
+        this.outputTextEl.style.fontSize = `${this.fontSize}em`;
+      }
+    }
+    this.outputTextEl.textContent = number;
+  };
+
+  Calculator.prototype.addInput = function(operator){
+    this.stack.push(parseInt(this.displayNumber), operator);
+
+    if (this.stack.length > 3) {
+      this.updateOutputView(this.quickSolve(this.stack));
+    }
+    this.displayNumber = '';
+  };
+
+  Calculator.prototype.input = function(key){
+    if (/[0-9]|\./.test(key)) {
+      this.keyFlash(key);
+      this.displayNumber += key;
+      this.updateOutputView(this.displayNumber);
+    } else if (/\/|\*|-|\+|Enter|AC|c|=|\.|_|%|÷|×/.test(key)) {
+      if (key == 'AC')  key = 'c';
+      if (key == 'Enter') key = '=';
+      if (key == '*') key = '×';
+      if (key == '/') key = '÷';
+      if (key == '+/-') key = '_';
+
+      this.keyFlash(key);
+
+      switch (key) {
+        case 'c':
+          this.clear();
+          break;
+
+        case '+':
+          if (this.displayNumber == '') {
+            break;
+          }
+
+          this.addInput('+');
+          break;
+
+        case '-':
+          if (this.displayNumber == '') {
+            break;
+          }
+
+          this.addInput('-');
+          break;
+
+        case '÷':
+          if (this.displayNumber == '') {
+            break;
+          }
+
+          this.addInput('/');
+          break;
+
+        case '×':
+          if (this.displayNumber == '') {
+            break;
+          }
+
+          this.addInput('*');
+          break;
+
+        case '_':
+          if (this.displayNumber[0] == '-') {
+            this.displayNumber = this.displayNumber.slice(1);
+
+            this.updateOutputView(this.displayNumber);
+            break;
+          }
+
+          this.displayNumber = `-${this.displayNumber}`;
+          this.updateOutputView(this.displayNumber);
+          break;
+
+        case '%':
+          this.stack.push(parseInt(this.displayNumber), '%');
+          let percent = this.quickSolve(this.stack);
+          percent = percent / 100;
+          this.updateOutputView(percent);
+          break;
+
+        case '=':
+          if (this.displayNumber == '') {
+            let value = this.stack[0];
+            const lastOperator = this.stack[this.stack.length-1];
+
+            let result = this.solve([this.stack[0], lastOperator, this.stack[0]]);
+            // let result = this.solve([stack[0], lastOperator, stack[0]]);
+            this.updateOutputView(result);
+            break;
+          }
+          this.stack.push(parseInt(this.displayNumber));
+          let result = this.solve(this.stack);
+          this.updateOutputView(result);
+          break;
+      }
+    }
+  };
+
+  Calculator.prototype.keyFlash = function(key)  {
+    const el = this.element.querySelector(`[id='${key}']`);
       el.classList.add(
         'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
 
@@ -37,302 +206,14 @@
         el.classList.remove(
           'calculator-keypad-inputkeys-numberkeys-numberkey-flash');
       }, 100);
-    };
-
-    /**
-    * Update the output view with the provided variable
-    * @method updateOutputView
-    * @param {(number|string)} number - A number value or special character
-    *     such as: . or -
-    */
-    this.updateOutputView = function(number){
-      /** Decrease font size as number increases length during input*/
-      if (displayNumber.length > 8) {
-        if (fontSize > 0.5) {
-          fontSize -= 0.25;
-          fontSize = Math.round(fontSize * 100) / 100;
-          outputTextEl.style.fontSize = `${fontSize}em`;
-        }
-      }
-      outputTextEl.textContent = number;
-    };
-
-    /**
-    * Clear the stack, the displayNumber and reset the output display to 0
-    * @method clear
-    */
-    this.clear = function(){
-      displayNumber = '';
-      this.updateOutputView(0);
-      stack = [];
-    };
-
-    /**
-    * Add the key entered to the stack. If the stack is more than 3, then the
-    *     user is continuing the input number, so solve the stack and display
-    *     the result.
-    * @method addInput
-    * @param {array} stack - The history of the input keys pressed
-    * @param {string} operator - The last operator pressed
-    */
-    this.addInput = function(stack, operator) {
-      stack.push(parseInt(displayNumber), operator);
-
-      if (stack.length > 3) {
-        this.updateOutputView(this.quickSolve(stack));
-      }
-      displayNumber = '';
-    };
-
-    /**
-    * Internal helper function to parse the stack into an array of grouped
-    *     pairs, ie [[+, 2], [-, 3]].
-    * @method createGroupedEquations
-    * @param {array} array - The stack to be parsed
-    * @param {number} chunkSize - The size of the groups, this will always be 2
-    */
-    const createGroupedEquations = function(array, chunkSize){
-      let groups = [];
-
-      for (let i =0; i < array.length; i += chunkSize) {
-        groups.push(array.slice(i, i + chunkSize));
-      }
-      return groups;
-    };
-
-    /**
-    * Simple addition method
-    * @method add
-    * @param {number} num1 - The first number to be added to
-    * @param {number} num2 - The second number to be added
-    */
-    this.add = function(num1, num2) {
-      let result = num1 + num2;
-      return result;
-    };
-
-    /**
-    * Simple subtraction method
-    * @method subtract
-    * @param {number} num1 - The first number to be subtracted from
-    * @param {number} num2 - The second number to be subtracted
-    */
-    this.subtract = function(num1, num2) {
-      let result = num1 - num2;
-      return result;
-    };
-
-    /**
-    * Simple multiplication method
-    * @method multiply
-    * @param {number} num1 - The first number to be multiplied
-    * @param {number} num2 - The second number to the multiplier
-    */
-    this.multiply = function(num1, num2) {
-      let result = num1 * num2;
-      return result;
-    };
-
-    /**
-    * Simple division method
-    * @method divide
-    * @param {number} num1 - The first number to be divided
-    * @param {number} num2 - The second number to be divided by
-    */
-    this.divide = function(num1, num2) {
-      let result = num1 / num2;
-      return result;
-    };
-
-    /**
-    * Helper method to update the output view as the user continues to
-    *     enter in values and operators
-    * @method quickSolve
-    * @param {array} stack - The state of the calculator
-    */
-    this.quickSolve = function(stack) {
-      let historyArray = stack.slice();
-      let solved;
-
-      /* If the stack is >= 3 then it has an operator at the end,
-      *    remove that.
-      */
-      if (stack.length >= 3) {
-        historyArray.pop();
-        solved = this.solve(historyArray);
-      }
-        solved = this.solve(historyArray);
-        return solved;
-    };
-
-    /**
-    * Input parsing method to flashKeys, update the displayNumber and
-    *     the output view.
-    * @method input
-    * @param {(number|string)} key - The provided key is tested for a
-    *     corresponding character. If it is a number then the displayNumber
-    *     and the output view are updated. If the key is an operator then
-    *     we will fire the appropriate method associated with provided operator
-    */
-    this.input = function(key){
-      if (/[0-9]|\./.test(key)) {
-        this.keyFlash(key);
-        displayNumber += key;
-        this.updateOutputView(displayNumber);
-      } else if (/\/|\*|-|\+|Enter|AC|c|=|\.|_|%|÷|×/.test(key)) {
-        if (key == 'AC')  key = 'c';
-        if (key == 'Enter') key = '=';
-        if (key == '*') key = '×';
-        if (key == '/') key = '÷';
-        if (key == '+/-') key = '_';
-
-        this.keyFlash(key);
-
-        switch (key) {
-          case 'c':
-            this.clear();
-            break;
-
-          case '+':
-            if (displayNumber == '') {
-              break;
-            }
-
-            this.addInput(stack, '+');
-            break;
-
-          case '-':
-            if (displayNumber == '') {
-              break;
-            }
-
-            this.addInput(stack, '-');
-            break;
-
-          case '÷':
-            if (displayNumber == '') {
-              break;
-            }
-
-            this.addInput(stack, '/');
-            break;
-
-          case '×':
-            if (displayNumber == '') {
-              break;
-            }
-
-            this.addInput(stack, '*');
-            break;
-
-          /** Toggle a negative symbol on the displayNumber */
-          case '_':
-            if (displayNumber[0] == '-') {
-              displayNumber = displayNumber.slice(1);
-
-              this.updateOutputView(displayNumber);
-              break;
-            }
-
-            displayNumber = `-${displayNumber}`;
-            this.updateOutputView(displayNumber);
-            break;
-
-          /** Determine the % of the first value in the stack */
-          case '%':
-            stack.push(parseInt(displayNumber), '%');
-            let percent = this.quickSolve(stack);
-            percent = percent / 100;
-            this.updateOutputView(percent);
-            break;
-
-          case '=':
-            /**
-            * If an operator was pressed before = then preform
-            * the operation of that value on itself. i.e 6+=(12)
-            */
-            if (displayNumber == '') {
-              let value = stack[0];
-              const lastOperator = stack[stack.length-1];
-
-              let result = this.solve([stack[0], lastOperator, stack[0]]);
-              // let result = this.solve([stack[0], lastOperator, stack[0]]);
-              this.updateOutputView(result);
-              break;
-            }
-            /**
-            * Add the current display number to this stack, solve the
-            * state and update output view
-            */
-            stack.push(parseInt(displayNumber));
-            let result = this.solve(stack);
-            this.updateOutputView(result);
-            break;
-        }
-      }
-    };
-
-    /**
-    * Method for solving the state of the calculator
-    * @method solve
-    * @param {array} array - The state of the calculator
-    */
-    this.solve = function(array) {
-      /* Preserve the original array */
-      let arrayEquation = array.slice();
-
-      /* If the last key pressed was an operator, identify that operator */
-      if ((arrayEquation[arrayEquation.length-1] == '')) {
-        let operator = arrayEquation[arrayEquation.length-2];
-      }
-
-      /* Set the starting number */
-      let currentNumber = arrayEquation[0];
-
-      /* Remove the starting number */
-      arrayEquation.shift();
-
-      /* Separate the equations into pairs, [operator value] */
-      const equations = createGroupedEquations(arrayEquation, 2);
-
-      /**
-      * Iterate over each group of [operator, value]s, determining the
-      * operator and applying the provided value to the currentNumber
-      */
-      for (let i = 0; i < equations.length; i++) {
-        switch (equations[i][0]) {
-          case '+':
-            currentNumber = this.add(currentNumber, equations[i][1]);
-            break;
-
-          case '-':
-            currentNumber = this.subtract(currentNumber, equations[i][1]);
-            break;
-
-          case '/':
-            currentNumber = this.divide(currentNumber, equations[i][1]);
-            break;
-
-          case '*':
-            currentNumber = this.multiply(currentNumber, equations[i][1]);
-            break;
-        }
-      }
-      displayNumber = '';
-      return currentNumber;
-    };
   };
 
   document.addEventListener('DOMContentLoaded', function() {
-    // Select the calculators
     const calculatorElements = document.querySelector('.pagewrap').children;
     const calculator1 = new Calculator(calculatorElements[0]);
     const calculator2 = new Calculator(calculatorElements[1]);
-    const calculators = [calculator1, calculator2];
     let focusedCalculator = calculator1;
 
-    // Focus the element if it is not already focused
-    // Set the calc1 to be the focused calc
     calculator1.element.addEventListener('click', function(event) {
       if (calculator1.element.classList.contains('unfocused')) {
         calculator1.element.classList.remove('unfocused');
@@ -341,8 +222,6 @@
       }
     });
 
-    // Focus the element if it is not already focused
-    // Set the calc2 to be the focused calc
     calculator2.element.addEventListener('click', function(event) {
       if (calculator2.element.classList.contains('unfocused')) {
         calculator2.element.classList.remove('unfocused');
@@ -351,7 +230,6 @@
       }
     });
 
-    // Send any keypad clicks to the calculator inputs
     calculator1.keypad.addEventListener('click', function(event) {
       calculator1.input(event.target.textContent);
     });
@@ -360,7 +238,6 @@
       calculator2.input(event.target.textContent);
     });
 
-    // Send any key presses to the active calc
     document.addEventListener('keypress', function(event){
       focusedCalculator.input(event.key);
     });
