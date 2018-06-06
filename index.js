@@ -15,8 +15,8 @@
     if (this.stack.length >= 3) {
       historyArray.pop();
     }
-      solved = this.solve(historyArray);
-      return solved;
+    solved = this.solve(historyArray);
+    return solved;
   };
 
   Calculator.prototype.solve = function(array) {
@@ -212,6 +212,7 @@
     const calculatorElements = document.querySelector('.pagewrap').children;
     const calculator1 = new Calculator(calculatorElements[0]);
     const calculator2 = new Calculator(calculatorElements[1]);
+    const calculators = [calculator1, calculator2];
     let focusedCalculator = calculator1;
 
     calculator1.element.addEventListener('click', function(event) {
@@ -230,12 +231,10 @@
       }
     });
 
-    calculator1.keypad.addEventListener('click', function(event) {
-      calculator1.input(event.target.textContent);
-    });
-
-    calculator2.keypad.addEventListener('click', function(event) {
-      calculator2.input(event.target.textContent);
+    Array.from(calculators).forEach(calc => {
+      calc.keypad.addEventListener('click', function(event) {
+        calculator1.input(event.target.textContent);
+      });
     });
 
     document.addEventListener('keypress', function(event){
